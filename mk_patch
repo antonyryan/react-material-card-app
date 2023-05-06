@@ -1,0 +1,31 @@
+#!/bin/bash
+
+cd fuse-base/fuse-react
+
+d=$(date +%Y%M%d-%H%m%S)
+
+PATCH_LIST=patch-list.$d.lst
+PATCH_FILE=patch.$d.tar.bz2
+
+find . -type f -newer ../LASTMOD | sed "
+/\/.git/d
+/documentation/d
+/src.app.auth/d
+/src.app.fuse-configs/d
+/src.app.main.apps.calendar/d
+/src.app.main.login/d
+/src.app.main.register/d
+/src.app.services/d
+"  > ../$PATCH_LIST
+
+touch ../LASTMOD
+
+tar cfj ../$PATCH_FILE -T ../$PATCH_LIST
+
+cd ../../
+
+tar xvfj fuse-base/$PATCH_FILE
+
+
+
+
