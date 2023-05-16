@@ -13,6 +13,7 @@ class CardModel {
         this.idLabels = card.idLabels || [];
         this.attachments = card.attachments || [];
         this.subscribed = card.subscribed || true;
+        this.orderlist = card.orderlist || null;
         this.checklists = card.checklists || [];
         this.checkItems = card.checkItems || 0;
         this.checkItemsChecked = card.checkItemsChecked || 0;

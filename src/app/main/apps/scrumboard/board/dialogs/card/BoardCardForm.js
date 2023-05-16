@@ -11,11 +11,15 @@ import CardAttachment from './attachment/CardAttachment';
 import DueMenu from './toolbar/DueMenu';
 import LabelsMenu from './toolbar/LabelsMenu';
 import MembersMenu from './toolbar/MembersMenu';
+import OrderListMenu from './toolbar/OrderListMenu';
 import CheckListMenu from './toolbar/CheckListMenu';
 import OptionsMenu from './toolbar/OptionsMenu';
+import CardOrderlist from './orderlist/CardOrderlist';
 import CardChecklist from './checklist/CardChecklist';
 import CardActivity from './activity/CardActivity';
 import CardComment from './comment/CardComment';
+import OrderlistModel from 'app/main/apps/scrumboard/model/OrderlistModel';
+
 
 function BoardCardForm(props)
 {
@@ -53,6 +57,11 @@ function BoardCardForm(props)
         setInForm('checklists', [...cardForm.checklists, newList]);
     }
 
+    function toggleOrderList(show)
+    {
+        setInForm('orderlist', show ? new OrderlistModel() : null);
+    }
+
     function chipChange(name, value)
     {
         setInForm(name, value.map(item => item.value));
@@ -88,6 +97,10 @@ function BoardCardForm(props)
         setInForm(`checklists[${index}]`, item);
     }, [setInForm]);
 
+    const handleOrderListChange = useCallback(orderlist => {
+        setInForm('orderlist', orderlist);
+    }, [setInForm]);
+
     function removeCheckList(id)
     {
         setInForm('checklists', _.reject(cardForm.checklists, {id: id}));
@@ -121,6 +134,11 @@ function BoardCardForm(props)
                                 onToggleMember={toggleMember}
                                 members={board.members}
                                 idMembers={cardForm.idMembers}
+                            />
+    
+                            <OrderListMenu
+                                orderlist={cardForm.orderlist}
+                                onToggleOrderlist={toggleOrderList}
                             />
 
                             <IconButton color="inherit">
@@ -299,6 +317,13 @@ function BoardCardForm(props)
                     )}
                 </div>
 
+                {!!cardForm.orderlist && (
+                    <CardOrderlist
+                        orderlist={cardForm.orderlist}
+                        onOrderListChange={handleOrderListChange}
+                    />
+                )}
+
                 {cardForm.attachments.length > 0 && (
                     <div className="mb-24">
                         <div className="flex items-center mt-16 mb-12">
@@ -307,16 +332,15 @@ function BoardCardForm(props)
                         </div>
                         <div className="flex flex-col sm:flex-row flex-wrap">
                             {cardForm.attachments.map(item => (
-                                    <CardAttachment
-                                        item={item}
-                                        card={cardForm}
-                                        makeCover={makeCover}
-                                        removeCover={removeCover}
-                                        removeAttachment={removeAttachment}
-                                        key={item.id}
-                                    />
-                                )
-                            )}
+                                <CardAttachment
+                                    item={item}
+                                    card={cardForm}
+                                    makeCover={makeCover}
+                                    removeCover={removeCover}
+                                    removeAttachment={removeAttachment}
+                                    key={item.id}
+                                />
+                            ))}
                         </div>
                     </div>
                 )}
