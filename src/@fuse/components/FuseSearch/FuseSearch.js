@@ -389,11 +389,11 @@ function FuseSearch(props)
             return (
                 <div className={clsx(classes.root, "flex", props.className)}>
 
-                    <Tooltip title="Click to search" placement="bottom">
+                    {/* <Tooltip title="Click to search" placement="bottom">
                         <div onClick={showSearch}>
                             {props.trigger}
                         </div>
-                    </Tooltip>
+                    </Tooltip> */}
 
                     {state.opened && (
                         <ClickAwayListener onClickAway={handleClickAway}>

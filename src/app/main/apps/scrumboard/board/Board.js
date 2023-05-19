@@ -75,7 +75,7 @@ function Board(props)
             className="flex flex-1 flex-col w-full h-full relative"
             ref={containerRef}
         >
-            <AppBar position="static" color="primary">
+            {/* <AppBar position="static" color="primary">
                 <Toolbar className="flex items-center justify-between px-4 sm:px-24 h-64 sm:h-96 container">
                     <Hidden xsDown>
                         <Button to="/apps/scrumboard/boards/" component={Link} variant="contained">
@@ -98,7 +98,7 @@ function Board(props)
                         <Icon>settings</Icon>
                     </IconButton>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
 
             <div className={clsx("flex flex-1 overflow-x-auto overflow-y-hidden")}>
 
