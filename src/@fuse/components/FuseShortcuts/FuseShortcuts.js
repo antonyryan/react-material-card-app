@@ -1,5 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Divider, Icon, IconButton, Input, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@material-ui/core';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
 import {makeStyles} from '@material-ui/styles';
 import * as UserActions from 'app/auth/store/actions';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,6 +27,14 @@ const useStyles = makeStyles({
     },
     addIcon: {
         color: amber[600]
+    },
+    innerFilter: {
+        minWidth: '100px',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+    },
+    filter: {
+        marginRight: '1em'
     }
 });
 
@@ -132,6 +146,54 @@ function FuseShortcuts(props)
                         </Tooltip>
                     </Link>
                 ))}
+
+                <Select
+                    value={10}
+                    // onChange={handleChange}
+                    classes={{select: classes.innerFilter}}
+                    className={classes.filter}
+                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
+                >
+                    <MenuItem value={10}>Sandwitch</MenuItem>
+                    <MenuItem value={20}>Banana</MenuItem>
+                    <MenuItem value={30}>Orange</MenuItem>
+                </Select>
+
+                <Select
+                    value={10}
+                    // onChange={handleChange}
+                    classes={{select: classes.innerFilter}}
+                    className={classes.filter}
+                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
+                >
+                    <MenuItem value={10}>One</MenuItem>
+                    <MenuItem value={20}>Two</MenuItem>
+                    <MenuItem value={30}>Three</MenuItem>
+                </Select>
+
+                <Select
+                    value={10}
+                    // onChange={handleChange}
+                    classes={{select: classes.innerFilter}}
+                    className={classes.filter}
+                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
+                >
+                    <MenuItem value={10}>Google</MenuItem>
+                    <MenuItem value={20}>Apple</MenuItem>
+                    <MenuItem value={30}>Amazon</MenuItem>
+                </Select>
+
+                <Select
+                    value={10}
+                    // onChange={handleChange}
+                    classes={{select: classes.innerFilter}}
+                    className={classes.filter}
+                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
+                >
+                    <MenuItem value={10}>Infant</MenuItem>
+                    <MenuItem value={20}>Junvenile</MenuItem>
+                    <MenuItem value={30}>Old</MenuItem>
+                </Select>
 
                 {/* <Tooltip title="Click to add/remove shortcut" placement={props.variant === "horizontal" ? "bottom" : "left"}>
                     <IconButton
