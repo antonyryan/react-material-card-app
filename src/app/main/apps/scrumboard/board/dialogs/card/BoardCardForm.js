@@ -103,7 +103,8 @@ function BoardCardForm(props)
 
     function removeCheckList(id)
     {
-        setInForm('checklists', _.reject(cardForm.checklists, {id: id}));
+        setInForm('checklists', []);
+        // setInForm('checklists', _.reject(cardForm.checklists, {id: id}));
     }
 
     function commentAdd(comment)
@@ -146,7 +147,9 @@ function BoardCardForm(props)
                             </IconButton>
 
                             <CheckListMenu
+                                checklistAdded={!!cardForm.checklists.length}
                                 onAddCheckList={addCheckList}
+                                onRemoveCheckList={removeCheckList}
                             />
 
                             <OptionsMenu

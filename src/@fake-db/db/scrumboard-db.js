@@ -137,27 +137,6 @@ const scrumboardDB = {
                                     'checked': false
                                 }
                             ]
-                        },
-                        {
-                            'name'      : 'Checklist 2',
-                            'id'        : '74031cfdbe1x72wcz1dc166z',
-                            'checkItems': [
-                                {
-                                    'id'     : 1,
-                                    'name'   : 'Replace event colors with Material Design colors',
-                                    'checked': true
-                                },
-                                {
-                                    'id'     : 2,
-                                    'name'   : 'Replace icons with Material Design icons',
-                                    'checked': false
-                                },
-                                {
-                                    'id'     : 3,
-                                    'name'   : 'Use moment.js',
-                                    'checked': false
-                                }
-                            ]
                         }
                     ],
                     'activities'       : [

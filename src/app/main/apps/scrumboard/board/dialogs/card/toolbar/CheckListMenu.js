@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Icon, IconButton, Button, TextField} from '@material-ui/core';
+import {Icon, IconButton, Button, TextField, MenuItem} from '@material-ui/core';
 import {useForm} from '@fuse/hooks';
 import ToolbarMenu from './ToolbarMenu';
 import ChecklistModel from 'app/main/apps/scrumboard/model/ChecklistModel';
@@ -50,27 +50,36 @@ function CheckListMenu(props)
                 <Icon>check_box</Icon>
             </IconButton>
             <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
-                <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
-                    <TextField
-                        label="Checklist title"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        fullWidth
-                        className="mb-12"
-                        variant="outlined"
-                        required
-                        autoFocus
-                    />
-                    <Button
-                        color="secondary"
-                        type="submit"
-                        disabled={isFormInvalid()}
-                        variant="contained"
-                    >
-                        Add
-                    </Button>
-                </form>
+                {props.checklistAdded ? (
+                    <MenuItem onClick={e => {
+                        handleMenuClose();
+                        props.onRemoveCheckList();
+                    }}>
+                        Remove checklist
+                    </MenuItem>
+                ) : (
+                    <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
+                        <TextField
+                            label="Checklist title"
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            fullWidth
+                            className="mb-12"
+                            variant="outlined"
+                            required
+                            autoFocus
+                        />
+                        <Button
+                            color="secondary"
+                            type="submit"
+                            disabled={isFormInvalid()}
+                            variant="contained"
+                        >
+                            Add
+                        </Button>
+                    </form>
+                )}
             </ToolbarMenu>
         </div>
     );
