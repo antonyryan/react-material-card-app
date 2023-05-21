@@ -119,7 +119,7 @@ function Board(props)
                                 ))}
                                 {provided.placeholder}
 
-                                <BoardAddList/>
+                                {/* <BoardAddList/> */}
                             </div>
                         )}
                     </Droppable>
