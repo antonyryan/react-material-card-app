@@ -5,7 +5,7 @@ import {useForm, useUpdateEffect} from '@fuse/hooks';
 function CardOrderlistItem(props)
 {
     const {item, index, onOrderItemChange} = props;
-    const {form, handleChange} = useForm(item);
+    const {form, handleChange, handleCustomChange} = useForm(item);
 
     useUpdateEffect(() => {
         onOrderItemChange(form, index);
@@ -30,6 +30,16 @@ function CardOrderlistItem(props)
             <td>
                 <TextField
                     className="flex flex-1 mx-8"
+                    name="code"
+                    margin="dense"
+                    value={form.code}
+                    onChange={handleChange}
+                    variant="outlined"
+                />
+            </td>
+            <td>
+                <TextField
+                    className="flex flex-1 mx-8"
                     name="name"
                     margin="dense"
                     value={form.name}
@@ -43,8 +53,8 @@ function CardOrderlistItem(props)
                     name="qty"
                     margin="dense"
                     value={form.qty}
-                    inputProps={{type: 'number'}}
-                    onChange={handleChange}
+                    inputProps={{type: 'number', min: 0}}
+                    onChange={handleCustomChange(e => parseInt(e.target.value))}
                     variant="outlined"
                 />
             </td>
@@ -54,7 +64,7 @@ function CardOrderlistItem(props)
                     name="price"
                     margin="dense"
                     value={form.price}
-                    inputProps={{type: 'number'}}
+                    inputProps={{type: 'number', min: 0}}
                     onChange={handleChange}
                     variant="outlined"
                 />
@@ -64,9 +74,7 @@ function CardOrderlistItem(props)
                     className="flex flex-1 mx-8"
                     name="tot"
                     margin="dense"
-                    value={form.tot}
-                    inputProps={{type: 'number'}}
-                    onChange={handleChange}
+                    value={Math.round(form.price * form.qty * 100) / 100}
                     variant="outlined"
                 />
             </td>

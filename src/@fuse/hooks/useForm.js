@@ -5,15 +5,22 @@ function useForm(initialState, onSubmit)
 {
     const [form, setForm] = useState(initialState);
 
-    const handleChange = useCallback((event) => {
+    const change = event => {
         event.persist();
         setForm(
             form => ({
                 ...form,
                 [event.target.name]: event.target.type === 'checkbox' ? event.target.checked : event.target.value
             })
-        );
-    }, []);
+        )
+    }
+
+    const handleChange = useCallback(change, []);
+
+    const handleCustomChange = useCallback(customCallback => event => {
+        event.target.value = customCallback(event);
+        change(event);
+    }, [])
 
     const resetForm = useCallback(() => {
         setForm(initialState);
@@ -37,6 +44,7 @@ function useForm(initialState, onSubmit)
     return {
         form,
         handleChange,
+        handleCustomChange,
         handleSubmit,
         resetForm,
         setForm,

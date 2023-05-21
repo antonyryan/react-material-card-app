@@ -5,26 +5,25 @@ import TextField from '@material-ui/core/TextField';
 import { useForm } from '@fuse/hooks';
 import OrderlistItemModel from 'app/main/apps/scrumboard/model/OrderlistItemModel';
 
-function CardAddChecklistItem(props)
+function CardAddOrderlistItem(props)
 {
-    const {form, handleChange, resetForm} = useForm(
+    const {form, handleChange, handleCustomChange, resetForm} = useForm(
         {
+            code: '',
             name: '',
             qty: '',
-            price: '',
-            tot: ''
+            price: ''
         }
     );
 
     function isFormInValid()
     {
-        return form.name === '' ||
+        return form.code === '' ||
+            form.name === '' ||
             form.qty === '' ||
             form.price === '' ||
-            form.tot === '' ||
             parseFloat(form.qty) < 0 ||
             parseFloat(form.price) < 0 ||
-            parseFloat(form.tot) < 0 ||
             !Number.isInteger(parseFloat(form.qty))
     }
 
@@ -44,6 +43,17 @@ function CardAddChecklistItem(props)
             <td>
                 <TextField
                     className="flex flex-1 mx-8"
+                    name="code"
+                    margin="dense"
+                    value={form.code}
+                    onKeyUp={e => e.which === 13 && handleSubmit()}
+                    onChange={handleChange}
+                    variant="outlined"
+                />
+            </td>
+            <td>
+                <TextField
+                    className="flex flex-1 mx-8"
                     name="name"
                     margin="dense"
                     value={form.name}
@@ -58,9 +68,9 @@ function CardAddChecklistItem(props)
                     name="qty"
                     margin="dense"
                     value={form.qty}
-                    onChange={handleChange}
+                    onChange={handleCustomChange(e => parseInt(e.target.value))}
                     onKeyUp={e => e.which === 13 && handleSubmit()}
-                    inputProps={{type: 'number'}}
+                    inputProps={{type: 'number', min: 0}}
                     variant="outlined"
                 />
             </td>
@@ -72,7 +82,7 @@ function CardAddChecklistItem(props)
                     value={form.price}
                     onChange={handleChange}
                     onKeyUp={e => e.which === 13 && handleSubmit()}
-                    inputProps={{type: 'number'}}
+                    inputProps={{type: 'number', min: 0}}
                     variant="outlined"
                 />
             </td>
@@ -81,10 +91,7 @@ function CardAddChecklistItem(props)
                     className="flex flex-1 mx-8"
                     name="tot"
                     margin="dense"
-                    value={form.tot}
-                    onChange={handleChange}
-                    inputProps={{type: 'number'}}
-                    onKeyUp={e => e.which === 13 && handleSubmit()}
+                    value={Math.round(form.price * form.qty * 100) / 100}
                     variant="outlined"
                 />
             </td>
@@ -103,4 +110,4 @@ function CardAddChecklistItem(props)
     );
 }
 
-export default CardAddChecklistItem;
+export default CardAddOrderlistItem;

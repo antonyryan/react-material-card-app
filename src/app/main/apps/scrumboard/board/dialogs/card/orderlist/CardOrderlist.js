@@ -118,6 +118,7 @@ function CardOrderlist(props)
                     <thead>
                         <tr>
                             <th></th>
+                            <th className={classes.otherColumn}>Code</th>
                             <th className={classes.nameColumn}>Name</th>
                             <th className={classes.otherColumn}>Qty</th>
                             <th className={classes.otherColumn}>Price</th>
@@ -136,7 +137,7 @@ function CardOrderlist(props)
                             />
                         ))}
                         <CardAddOrderlistItem
-                            onOrderItemAdd={item => handleOrderItemAdd(item)}
+                            onOrderItemAdd={handleOrderItemAdd}
                         />
                     </tbody>
                 </table>
