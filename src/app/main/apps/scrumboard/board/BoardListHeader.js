@@ -98,8 +98,8 @@ function BoardListHeader(props)
                         </ClickAwayListener>
                     ) : (
                         <Typography
-                            className="text-16 font-600 cursor-pointer"
-                            onClick={() => handleOpenForm()}
+                            className="text-16 font-600"
+                            // onClick={() => handleOpenForm()}
                         >
                             {props.list.name}
                         </Typography>

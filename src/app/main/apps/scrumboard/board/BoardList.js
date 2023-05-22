@@ -28,22 +28,22 @@ function BoardList(props)
     }
 
     return (
-        <Draggable draggableId={props.list.id} index={props.index} type="list">
-            {(provided, snapshot) => (
-                <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                >
+        // <Draggable draggableId={props.list.id} index={props.index} type="list">
+        //     {(provided, snapshot) => (
+        //         <div
+        //             ref={provided.innerRef}
+        //             {...provided.draggableProps}
+        //         >
                     <Card
                         className={clsx(classes.list, "w-256 sm:w-320 mr-16 sm:mr-24 max-h-full flex flex-col")}
                         square={true}
-                        elevation={snapshot.isDragging ? 3 : 1}
+                        // elevation={snapshot.isDragging ? 3 : 1}
                     >
 
                         <BoardListHeader
                             list={props.list}
                             className="border-b-1"
-                            handleProps={provided.dragHandleProps}
+                            // handleProps={provided.dragHandleProps}
                         />
 
                         <RootRef rootRef={contentScrollEl}>
@@ -70,13 +70,13 @@ function BoardList(props)
                             </CardContent>
                         </RootRef>
 
-                        <CardActions className="p-0 flex-shrink-0">
+                        {/* <CardActions className="p-0 flex-shrink-0">
                             <BoardAddCard listId={props.list.id} onCardAdded={handleCardAdded}/>
-                        </CardActions>
+                        </CardActions> */}
                     </Card>
-                </div>
-            )}
-        </Draggable>
+        //         </div>
+        //     )}
+        // </Draggable>
     );
 }
 
