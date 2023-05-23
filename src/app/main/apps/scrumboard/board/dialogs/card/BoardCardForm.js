@@ -1,5 +1,20 @@
 import React, {useCallback} from 'react';
-import {TextField, DialogContent, DialogTitle, Icon, IconButton, Typography, Toolbar, AppBar, Avatar, InputAdornment, Tooltip, List} from '@material-ui/core';
+
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/styles';
+
 import {FuseChipSelect} from '@fuse';
 import {useForm, useDebounce, useUpdateEffect} from '@fuse/hooks';
 import _ from '@lodash';
@@ -21,6 +36,13 @@ import CardComment from './comment/CardComment';
 import OrderlistModel from 'app/main/apps/scrumboard/model/OrderlistModel';
 
 
+const useStyles = makeStyles(theme => ({
+    saveButton: {
+        margin: '1em',
+        marginLeft: 0
+    }
+}));
+
 function BoardCardForm(props)
 {
     const dispatch = useDispatch();
@@ -28,14 +50,20 @@ function BoardCardForm(props)
     const board = useSelector(({scrumboardApp}) => scrumboardApp.board);
 
     const {form: cardForm, handleChange, setForm, setInForm} = useForm(card);
-    const updateCard = useDebounce((boardId, newCard) => {
-        dispatch(Actions.updateCard(boardId, {...newCard}));
-    }, 600);
+    // const updateCard = useDebounce((boardId, newCard) => {
+    //     dispatch(Actions.updateCard(boardId, {...newCard}));
+    // }, 600);
     const dueDate = cardForm && cardForm.due ? moment(cardForm.due).format(moment.HTML5_FMT.DATE) : "";
+    const classes = useStyles();
 
-    useUpdateEffect(() => {
-        updateCard(board.id, cardForm);
-    }, [dispatch, board.id, cardForm, updateCard]);
+    // useUpdateEffect(() => {
+        
+    // }, [dispatch, board.id, cardForm, updateCard]);
+
+    function handleSaveClick()
+    {
+        dispatch(Actions.updateCard(board.id, {...cardForm}));
+    }
 
     function removeDue()
     {
@@ -117,8 +145,14 @@ function BoardCardForm(props)
             <DialogTitle component="div" className="p-0">
                 <AppBar position="static" elevation={1}>
                     <Toolbar className="flex w-full overflow-x-auto px-8 sm:px-16">
-                        <div className="flex flex-1">
-
+                        <div className="flex flex-1 items-center">
+                            <Button
+                                variant='contained'
+                                onClick={handleSaveClick}
+                                className={classes.saveButton}    
+                            >
+                                Save
+                            </Button>
                             <DueMenu
                                 onDueChange={handleChange}
                                 onRemoveDue={removeDue}

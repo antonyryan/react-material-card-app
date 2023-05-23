@@ -70,9 +70,9 @@ function BoardList(props)
                             </CardContent>
                         </RootRef>
 
-                        {/* <CardActions className="p-0 flex-shrink-0">
+                        <CardActions className="p-0 flex-shrink-0">
                             <BoardAddCard listId={props.list.id} onCardAdded={handleCardAdded}/>
-                        </CardActions> */}
+                        </CardActions>
                     </Card>
         //         </div>
         //     )}
