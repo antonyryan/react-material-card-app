@@ -48,19 +48,21 @@ export function updateCard(boardId, card)
     }
 }
 
-export function removeCard(boardId, cardId)
+export function removeCard(cardId)
 {
     return (dispatch) => {
-        const request = axios.post('/api/scrumboard-app/card/remove', {
-            boardId,
-            cardId
+        dispatch({
+            type: CLOSE_CARD_DIALOG
+        });
+        
+        const request = axios.post('/api/card/del', {
+            id_card: cardId
         });
 
         return request.then((response) =>
             dispatch({
                 type: REMOVE_CARD,
-                boardId,
-                cardId
+                payload: cardId
             })
         );
     };

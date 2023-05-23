@@ -22,10 +22,6 @@ const cardReducer = function (state = initialState, action) {
                 data: action.payload
             };
         }
-        case Actions.REMOVE_CARD:
-        {
-            return initialState;
-        }
         case Actions.CLOSE_CARD_DIALOG:
         {
             return initialState;

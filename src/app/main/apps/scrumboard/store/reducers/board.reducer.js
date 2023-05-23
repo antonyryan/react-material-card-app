@@ -53,6 +53,25 @@ const boardReducer = function (state = initialState, action) {
                 })
             }
         }
+        case Actions.REMOVE_CARD:
+        {
+            const cardId = action.payload;
+
+            return {
+                ...state,
+                lists: state.lists.map(list => {
+                    if (list.idCards.includes(cardId)) {
+                        return {
+                            ...list,
+                            idCards: list.idCards.filter(id => id !== cardId)
+                        }
+                    } else {
+                        return list;
+                    }
+                }),
+                cards: state.cards.filter(card => card.id !== cardId)
+            }
+        }
         case Actions.ADD_LABEL:
         {
             return {

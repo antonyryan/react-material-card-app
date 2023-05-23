@@ -189,7 +189,7 @@ function BoardCardForm(props)
                             />
 
                             <OptionsMenu
-                                onRemoveCard={() => dispatch(Actions.removeCard(board.id, cardForm.id))}
+                                onRemoveCard={() => dispatch(Actions.removeCard(cardForm.id))}
                             />
 
                         </div>
