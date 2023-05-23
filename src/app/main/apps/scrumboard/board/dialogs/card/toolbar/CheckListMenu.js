@@ -8,7 +8,7 @@ function CheckListMenu(props)
 {
     const [anchorEl, setAnchorEl] = useState(null);
     const {form, handleChange, resetForm} = useForm({
-        name: ''
+        name: 'Checklist'
     });
 
     useEffect(() => {
@@ -36,12 +36,12 @@ function CheckListMenu(props)
     function handleSubmit(ev)
     {
         ev.preventDefault();
+        handleMenuClose();
         if ( isFormInvalid() )
         {
             return;
         }
         props.onAddCheckList(new ChecklistModel(form));
-        handleMenuClose();
     }
 
     return (
@@ -49,38 +49,45 @@ function CheckListMenu(props)
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 <Icon>check_box</Icon>
             </IconButton>
-            <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
-                {props.checklistAdded ? (
-                    <MenuItem onClick={e => {
-                        handleMenuClose();
-                        props.onRemoveCheckList();
-                    }}>
-                        Remove checklist
-                    </MenuItem>
-                ) : (
-                    <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
-                        <TextField
-                            label="Checklist title"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
-                            fullWidth
-                            className="mb-12"
-                            variant="outlined"
-                            required
-                            autoFocus
-                        />
-                        <Button
-                            color="secondary"
-                            type="submit"
-                            disabled={isFormInvalid()}
-                            variant="contained"
-                        >
-                            Add
-                        </Button>
-                    </form>
-                )}
-            </ToolbarMenu>
+            {anchorEl && 
+                <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
+                    {props.checklistAdded ? (
+                        <MenuItem onClick={e => {
+                            handleMenuClose();
+                            props.onRemoveCheckList();
+                        }}>
+                            Remove checklist
+                        </MenuItem>
+                    ) : (
+                        <MenuItem onClick={e => {
+                            handleSubmit(e);
+                        }}>
+                            Add checklist
+                        </MenuItem>
+                        // <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
+                        //     <TextField
+                        //         label="Checklist title"
+                        //         name="name"
+                        //         value={form.name}
+                        //         onChange={handleChange}
+                        //         fullWidth
+                        //         className="mb-12"
+                        //         variant="outlined"
+                        //         required
+                        //         autoFocus
+                        //     />
+                        //     <Button
+                        //         color="secondary"
+                        //         type="submit"
+                        //         disabled={isFormInvalid()}
+                        //         variant="contained"
+                        //     >
+                        //         Add
+                        //     </Button>
+                        // </form>
+                    )}
+                </ToolbarMenu>
+            }
         </div>
     );
 }

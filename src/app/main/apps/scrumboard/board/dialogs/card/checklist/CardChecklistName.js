@@ -72,10 +72,10 @@ const CardChecklistName = React.forwardRef(function CardChecklistName(props, ref
         </ClickAwayListener>
     ) : (
         <Typography
-            className="text-16 font-600 cursor-pointer"
-            onClick={() => handleOpenForm()}
+            className="text-16 font-600"
+            // onClick={() => handleOpenForm()}
         >
-            {form.name}
+            Checklist
         </Typography>
     )
 });

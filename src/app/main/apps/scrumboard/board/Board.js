@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import BoardTitle from './BoardTitle';
 import BoardList from './BoardList';
 import BoardAddList from './BoardAddList';
+import {FuseSplashScreen} from '@fuse';
 import BoardCardDialog from './dialogs/card/BoardCardDialog';
 import BoardSettingsSidebar from './sidebars/settings/BoardSettingsSidebar';
 import {useDispatch, useSelector} from 'react-redux';
@@ -67,7 +68,7 @@ function Board(props)
 
     if ( !board )
     {
-        return null;
+        return <FuseSplashScreen/>;
     }
 
     return (

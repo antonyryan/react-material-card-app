@@ -29,21 +29,22 @@ export function updateCard(boardId, card)
             card
         });
 
-        return request.then((response) => {
-            dispatch(showMessage({
-                message         : 'Card Saved',
-                autoHideDuration: 2000,
-                anchorOrigin    : {
-                    vertical  : 'top',
-                    horizontal: 'right'
-                }
-            }));
+        return request.then(
+            (response) => {
+                dispatch(showMessage({
+                    message         : 'Card Saved',
+                    autoHideDuration: 2000,
+                    anchorOrigin    : {
+                        vertical  : 'top',
+                        horizontal: 'right'
+                    }
+                }));
 
-            return dispatch({
-                type   : UPDATE_CARD,
-                payload: card
-            })
-        });
+                return dispatch({
+                    type   : UPDATE_CARD,
+                    payload: card
+                })
+            });
     }
 }
 

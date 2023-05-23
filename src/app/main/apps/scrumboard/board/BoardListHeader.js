@@ -101,7 +101,7 @@ function BoardListHeader(props)
                             className="text-16 font-600"
                             // onClick={() => handleOpenForm()}
                         >
-                            {props.list.name}
+                            {props.list.name.charAt(0).toUpperCase() + props.list.name.slice(1)}
                         </Typography>
                     )}
 

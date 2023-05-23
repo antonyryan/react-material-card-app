@@ -62,7 +62,7 @@ function BoardCardForm(props)
 
     function handleSaveClick()
     {
-        dispatch(Actions.updateCard(board.id, {...cardForm}));
+        dispatch(Actions.updateCard(board.id, cardForm));
     }
 
     function removeDue()
@@ -159,11 +159,13 @@ function BoardCardForm(props)
                                 due={dueDate}
                             />
 
-                            <LabelsMenu
-                                onToggleLabel={toggleLabel}
-                                labels={board.labels}
-                                idLabels={cardForm.idLabels}
-                            />
+                            {board.labels && board.labels.length > 0 && (
+                                <LabelsMenu
+                                    onToggleLabel={toggleLabel}
+                                    labels={board.labels}
+                                    idLabels={cardForm.idLabels}
+                                />
+                            )}
 
                             <MembersMenu
                                 onToggleMember={toggleMember}

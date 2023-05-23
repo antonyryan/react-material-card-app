@@ -24,15 +24,27 @@ export const REMOVE_LIST = '[SCRUMBOARD APP] REMOVE LIST';
 
 export function getBoard(params)
 {
-    const request = axios.get('/api/scrumboard-app/board', {params: {boardId: '32gfhaf2'}});
+    // const remote = false;
+    const remote = true;
+
+    const request = remote
+        ? axios.post('/api/board/get')
+        : axios.get('/api/scrumboard-app/board', {params: {boardId: '32gfhaf2'}})
 
     return (dispatch) =>
         request.then(
-            (response) =>
-                dispatch({
-                    type   : GET_BOARD,
-                    payload: response.data
-                }),
+            (response) => {
+                const board = remote
+                    ? _.get(response, 'data.boards[0]')
+                    : _.get(response, 'data')
+                
+                if (board) {
+                    dispatch({
+                        type   : GET_BOARD,
+                        payload: board
+                    })
+                }
+            },
             (error) => {
                 dispatch(showMessage({
                     message         : error.response.data,

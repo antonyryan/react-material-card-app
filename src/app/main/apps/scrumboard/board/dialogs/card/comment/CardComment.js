@@ -4,11 +4,24 @@ import {useForm} from '@fuse/hooks';
 import CommentModel from 'app/main/apps/scrumboard/model/CommentModel';
 import _ from '@lodash';
 
+
+function getUserId()
+{
+    try {
+        const auth = JSON.parse(localStorage.getItem('auth'));
+        if (auth) {
+            return auth.id_user;
+        }
+    } catch (e) { }
+
+    return undefined;
+}
+
 function CardComment(props)
 {
     const {form, handleChange, resetForm} = useForm(
         {
-            idMember: '36027j1930450d8bf7b10158',
+            idMember: getUserId(),
             message : ''
         }
     );
@@ -32,7 +45,11 @@ function CardComment(props)
 
     return (
         <form onSubmit={handleSubmit} className="flex">
-            <Avatar className="w-32 h-32" alt={user.name} src={user.avatar}/>
+            <Avatar
+                className="w-32 h-32 mt-5"
+                alt={user ? user.name : undefined}
+                src={user ? user.avatar : undefined}
+            />
             <div className="flex flex-col items-start flex-1 pr-0 pl-16">
                 <TextField
                     className="flex flex-1"
@@ -52,7 +69,7 @@ function CardComment(props)
                     color="secondary"
                     type="submit"
                     size="small"
-                    disabled={isFormInvalid()}
+                    disabled={!user || isFormInvalid()}
                 >
                     Save
                 </Button>

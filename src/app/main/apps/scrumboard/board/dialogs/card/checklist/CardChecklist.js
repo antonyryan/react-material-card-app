@@ -91,12 +91,12 @@ function CardChecklist(props)
                             </ListItemIcon>
                             <ListItemText primary="Remove Checklist"/>
                         </MenuItem>
-                        <MenuItem onClick={handleOpenNameForm}>
+                        {/* <MenuItem onClick={handleOpenNameForm}>
                             <ListItemIcon className="min-w-40">
                                 <Icon>edit</Icon>
                             </ListItemIcon>
                             <ListItemText primary="Rename Checklist"/>
-                        </MenuItem>
+                        </MenuItem> */}
                     </Menu>
                 </div>
             </div>
@@ -124,7 +124,7 @@ function CardChecklist(props)
                         />
                     ))}
                     <CardAddChecklistItem
-                        onListItemAdd={(item) => handleListItemAdd(item)}
+                        onListItemAdd={handleListItemAdd}
                     />
                 </List>
             </div>
