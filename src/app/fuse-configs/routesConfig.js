@@ -4,11 +4,15 @@ import {FuseUtils} from '@fuse/index';
 import {appsConfigs} from 'app/main/apps/appsConfigs';
 // import {UserInterfaceConfig} from 'app/main/user-interface/UserInterfaceConfig';
 import {CallbackConfig} from 'app/main/callback/CallbackConfig';
+import {RegisterConfig} from 'app/main/register/RegisterConfig';
+import {ActivateConfig} from 'app/main/activate/ActivateConfig';
 
 const routeConfigs = [
     ...appsConfigs,
     // UserInterfaceConfig,
-    CallbackConfig
+    CallbackConfig,
+    RegisterConfig,
+    ActivateConfig,
 ];
 
 const routes = [

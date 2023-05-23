@@ -24,7 +24,7 @@ export const REMOVE_LIST = '[SCRUMBOARD APP] REMOVE LIST';
 
 export function getBoard(params)
 {
-    const request = axios.get('/api/scrumboard-app/board', {params});
+    const request = axios.get('/api/scrumboard-app/board', {params: {boardId: '32gfhaf2'}});
 
     return (dispatch) =>
         request.then(

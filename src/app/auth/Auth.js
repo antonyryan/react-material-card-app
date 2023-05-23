@@ -6,12 +6,23 @@ import * as Actions from 'app/store/actions';
 import firebaseService from 'app/services/firebaseService';
 import auth0Service from 'app/services/auth0Service';
 import jwtService from 'app/services/jwtService';
+import axios from 'axios';
+
 
 class Auth extends Component {
     /*eslint-disable-next-line no-useless-constructor*/
     constructor(props)
     {
         super(props);
+
+        axios.defaults.baseURL = 'https://rfq.os3test.it';
+
+        try {
+            const auth = JSON.parse(localStorage.getItem('auth'));
+            if (auth) {
+                axios.defaults.headers.Authorization = `Token ${auth.token}`;
+            }
+        } catch (e) {}
 
         /**
          * Comment the line if you do not use JWt

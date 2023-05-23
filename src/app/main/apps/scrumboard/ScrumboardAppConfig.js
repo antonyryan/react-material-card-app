@@ -5,11 +5,16 @@ export const ScrumboardAppConfig = {
     settings: {
         layout: {}
     },
+    lists: [
+        'new', 'info', 'prov', 'tech', 'sell', 'warehouse', 'suspended', 'ready', 'sent'
+    ],
     routes  : [
         {
-            path     : '/apps/scrumboard/boards/:boardId/:boardUri?',
+            // path     : '/apps/scrumboard/boards/:boardId/:boardUri?',
+            path     : '/board',
             component: React.lazy(() => import('./board/Board'))
-        },
+        }
+        /*
         {
             path     : '/apps/scrumboard/boards',
             component: React.lazy(() => import('./boards/Boards'))
@@ -18,5 +23,6 @@ export const ScrumboardAppConfig = {
             path     : '/apps/scrumboard',
             component: () => <Redirect to="/apps/scrumboard/boards"/>
         }
+        */
     ]
 };
