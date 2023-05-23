@@ -34,7 +34,7 @@ function BoardAddCard(props)
     function handleSubmit(ev)
     {
         ev.preventDefault();
-        dispatch(Actions.newCard(board.id, props.listId, form.title))
+        dispatch(Actions.newCard(props.listId, form.title))
             .then(() => {
                 props.onCardAdded();
             });

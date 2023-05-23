@@ -39,9 +39,19 @@ const boardReducer = function (state = initialState, action) {
         }
         case Actions.ADD_CARD:
         {
+            const { listId, card } = action.payload;
+
             return {
-                ...action.payload
-            };
+                ...state,
+                cards: [...state.cards, { ...card }],
+                lists: state.lists.map(list => {
+                    if (list.id === listId) {
+                        return {...list, idCards: list.idCards.concat(card.id)};
+                    } else {
+                        return list;
+                    }
+                })
+            }
         }
         case Actions.ADD_LABEL:
         {

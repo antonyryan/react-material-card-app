@@ -143,24 +143,26 @@ export function reorderCard(result)
     }
 }
 
-export function newCard(boardId, listId, cardTitle)
+export function newCard(listId, cardTitle)
 {
-    const data = new CardModel({name: cardTitle});
+    const request = axios.post('/api/card/add', {
+        title: cardTitle,
+        state: listId
+    });
 
-    const request = axios.post('/api/scrumboard-app/card/new',
-        {
-            boardId,
-            listId,
-            data
-        }
-    );
     return (dispatch) =>
         new Promise((resolve, reject) => {
             request.then((response) => {
                 resolve(response.data);
+
+                const card = new CardModel({
+                    name: cardTitle,
+                    id: response.data.card._id
+                });
+                
                 return dispatch({
                     type   : ADD_CARD,
-                    payload: response.data
+                    payload: { listId, card }
                 });
             });
         });
