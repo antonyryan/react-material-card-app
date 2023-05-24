@@ -25,19 +25,12 @@ export const REMOVE_LIST = '[SCRUMBOARD APP] REMOVE LIST';
 
 export function getBoard(params)
 {
-    // const remote = false;
-    const remote = true;
-
-    const request = remote
-        ? axios.post('/api/board/get')
-        : axios.get('/api/scrumboard-app/board', {params: {boardId: '32gfhaf2'}})
+    const request = axios.post('/api/board/get');
 
     return (dispatch) =>
         request.then(
             (response) => {
-                const board = remote
-                    ? _.get(response, 'data.boards[0]')
-                    : _.get(response, 'data')
+                const board = _.get(response, 'data.boards[0]');
                 
                 if (board) {
                     dispatch({
@@ -48,8 +41,8 @@ export function getBoard(params)
             },
             (error) => {
                 dispatch(showMessage({
-                    message         : error.response.data,
-                    autoHideDuration: 2000,
+                    message         : 'Token is expired or invalid',
+                    autoHideDuration: 5000,
                     anchorOrigin    : {
                         vertical  : 'top',
                         horizontal: 'right'
