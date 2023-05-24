@@ -24,8 +24,15 @@ export function closeCardDialog()
 export function updateCard(card)
 {
     return (dispatch) => {
-        const request = axios.post('/api/scrumboard-app/card/update', {
-            card
+        const request = axios.post('/api/card/add', {
+            id_card: card.id,
+            title: card.name,
+            description: card.description,
+            detail: card
+        });
+
+        dispatch({
+            type: CLOSE_CARD_DIALOG
         });
 
         return request.then(

@@ -16,7 +16,7 @@ import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/styles';
 
 import {FuseChipSelect} from '@fuse';
-import {useForm, useDebounce, useUpdateEffect} from '@fuse/hooks';
+import {useForm, useDebounce} from '@fuse/hooks';
 import _ from '@lodash';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
@@ -33,7 +33,6 @@ import CardOrderlist from './orderlist/CardOrderlist';
 import CardChecklist from './checklist/CardChecklist';
 import CardActivity from './activity/CardActivity';
 import CardComment from './comment/CardComment';
-import OrderlistModel from 'app/main/apps/scrumboard/model/OrderlistModel';
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,19 +49,16 @@ function BoardCardForm(props)
     const board = useSelector(({scrumboardApp}) => scrumboardApp.board);
 
     const {form: cardForm, handleChange, setForm, setInForm} = useForm(card);
-    // const updateCard = useDebounce((boardId, newCard) => {
-    //     dispatch(Actions.updateCard(boardId, {...newCard}));
-    // }, 600);
+    const updateCard = useDebounce(newCard => {
+        dispatch(Actions.updateCard({...newCard}));
+    }, 0);
+
     const dueDate = cardForm && cardForm.due ? moment(cardForm.due).format(moment.HTML5_FMT.DATE) : "";
     const classes = useStyles();
 
-    // useUpdateEffect(() => {
-        
-    // }, [dispatch, board.id, cardForm, updateCard]);
-
     function handleSaveClick()
     {
-        dispatch(Actions.updateCard(cardForm));
+        updateCard(cardForm);
     }
 
     function removeDue()
