@@ -119,12 +119,15 @@ export function reorderCard(result)
             result.destination
         );
 
-        const request = axios.post('/api/scrumboard-app/card/order',
-            {
-                boardId: board.id,
-                lists  : ordered
-            }
-        );
+        const cardId = result.draggableId;
+        const targetState = result.destination.droppableId;
+        const cardOrder = _.find(ordered, { id: targetState }).idCards;
+
+        const request = axios.post('/api/card/add', {
+            id_card: cardId,
+            state: targetState,
+            card_order: cardOrder
+        });
 
         request.then((response) => {
             dispatch(showMessage({
