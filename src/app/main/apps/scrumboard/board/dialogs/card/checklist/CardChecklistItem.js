@@ -27,7 +27,6 @@ function CardChecklistItem(props)
                 name="checked"
                 onChange={handleChange}
                 tabIndex={-1}
-                disableRipple
             />
             <TextField
                 className="flex flex-1 mx-8"

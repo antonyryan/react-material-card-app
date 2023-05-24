@@ -14,7 +14,7 @@ class CardModel {
         this.attachments = card.attachments || [];
         this.subscribed = card.subscribed || true;
         this.orderlist = card.orderlist || null;
-        this.checklists = card.checklists || [];
+        this.checklists = card.checklists || null;
         this.checkItems = card.checkItems || 0;
         this.checkItemsChecked = card.checkItemsChecked || 0;
         this.comments = card.comments || [];

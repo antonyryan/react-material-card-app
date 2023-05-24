@@ -24,7 +24,6 @@ function CardOrderlistItem(props)
                     name="checked"
                     onChange={handleChange}
                     tabIndex={-1}
-                    disableRipple
                 />
             </td>
             <td>

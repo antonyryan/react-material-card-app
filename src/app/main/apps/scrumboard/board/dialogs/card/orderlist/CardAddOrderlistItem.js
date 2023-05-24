@@ -3,7 +3,7 @@ import Icon from '@material-ui/core/Icon';
 import Fab from '@material-ui/core/Fab';
 import TextField from '@material-ui/core/TextField';
 import { useForm } from '@fuse/hooks';
-import OrderlistItemModel from 'app/main/apps/scrumboard/model/OrderlistItemModel';
+import OrderlistModel from 'app/main/apps/scrumboard/model/OrderlistModel';
 
 function CardAddOrderlistItem(props)
 {
@@ -33,7 +33,7 @@ function CardAddOrderlistItem(props)
         {
             return;
         }
-        props.onOrderItemAdd(new OrderlistItemModel(form));
+        props.onOrderItemAdd(new OrderlistModel(form));
         resetForm();
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Icon, ListItem, TextField, Fab} from '@material-ui/core';
 import {useForm} from '@fuse/hooks';
-import ChecklistItemModel from 'app/main/apps/scrumboard/model/ChecklistItemModel';
+import ChecklistModel from 'app/main/apps/scrumboard/model/ChecklistModel';
 
 function CardAddChecklistItem(props)
 {
@@ -23,7 +23,7 @@ function CardAddChecklistItem(props)
         {
             return;
         }
-        props.onListItemAdd(new ChecklistItemModel(form));
+        props.onListItemAdd(new ChecklistModel(form));
         resetForm();
     }
 

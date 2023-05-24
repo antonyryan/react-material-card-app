@@ -87,7 +87,7 @@ function BoardCardForm(props)
 
     function toggleOrderList(show)
     {
-        setInForm('orderlist', show ? new OrderlistModel() : null);
+        setInForm('orderlist', show ? [] : null);
     }
 
     function chipChange(name, value)
@@ -136,6 +136,11 @@ function BoardCardForm(props)
         } else {
             setInForm('checklists', null);
         }
+    }
+
+    function removeOrderList(id)
+    {
+        setInForm('orderlist', _.reject(cardForm.orderlist, { id }))
     }
 
     function commentAdd(comment)

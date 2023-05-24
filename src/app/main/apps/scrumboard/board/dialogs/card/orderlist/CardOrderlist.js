@@ -62,17 +62,17 @@ function CardOrderlist(props)
     }
 
     const handleOrderItemChange = useCallback((item, index) => {
-        setInForm(`orderItems[${index}]`, item);
+        setInForm(`[${index}]`, item);
     }, [setInForm]);
 
     function handleOrderItemRemove(id)
     {
-        setInForm('orderItems', _.reject(form.orderItems, {id}));
+        setForm(_.reject(form, {id}));
     }
 
     function handleOrderItemAdd(item)
     {
-        setInForm('orderItems', [...form.orderItems, item]);
+        setForm([...form, item]);
     }
 
     if ( !form )
@@ -127,9 +127,9 @@ function CardOrderlist(props)
                         </tr>
                     </thead>
                     <tbody>
-                        {form.orderItems.map((item, key) => (
+                        {form.map((item, key) => (
                             <CardOrderlistItem
-                                key={key}
+                                key={item.id}
                                 item={item}
                                 index={key}
                                 onOrderItemChange={handleOrderItemChange}
