@@ -7,7 +7,7 @@ import ChecklistModel from 'app/main/apps/scrumboard/model/ChecklistModel';
 function CheckListMenu(props)
 {
     const [anchorEl, setAnchorEl] = useState(null);
-    const {form, handleChange, resetForm} = useForm({
+    const {form, resetForm} = useForm({
         name: 'Checklist'
     });
 
@@ -41,7 +41,7 @@ function CheckListMenu(props)
         {
             return;
         }
-        props.onAddCheckList(new ChecklistModel(form));
+        props.onSetCheckList();
     }
 
     return (
@@ -59,9 +59,7 @@ function CheckListMenu(props)
                             Remove checklist
                         </MenuItem>
                     ) : (
-                        <MenuItem onClick={e => {
-                            handleSubmit(e);
-                        }}>
+                        <MenuItem onClick={handleSubmit}>
                             Add checklist
                         </MenuItem>
                         // <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
@@ -69,8 +67,7 @@ function CheckListMenu(props)
                         //         label="Checklist title"
                         //         name="name"
                         //         value={form.name}
-                        //         onChange={handleChange}
-                        //         fullWidth
+                        //         onChange={                        //         fullWidth
                         //         className="mb-12"
                         //         variant="outlined"
                         //         required

@@ -36,12 +36,12 @@ function BoardCard(props)
 
     function getCheckItemsChecked(card)
     {
-        return _.sum(card.checklists.map(list => _.sum(list.checkItems.map(x => (x.checked ? 1 : 0)))));
+        return card.checklists.filter(({ checked }) => checked).length;
     }
 
     function getCheckItems(card)
     {
-        return _.sum(card.checklists.map(x => x.checkItems.length));
+        return card.checklists.length;
     }
 
     function getCommentsCount(card)

@@ -1,27 +1,19 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useCallback} from 'react';
 import {Icon, Typography, Menu, MenuItem, LinearProgress, List, ListItemText, ListItemIcon, IconButton} from '@material-ui/core';
 import CardChecklistItem from './CardChecklistItem';
 import CardAddChecklistItem from './CardAddChecklistItem';
 import _ from '@lodash';
 import {useForm, useUpdateEffect} from '@fuse/hooks';
-import CardChecklistName from './CardChecklistName';
 
 function CardChecklist(props)
 {
-    const {onCheckListChange, checklist, index} = props;
+    const {onCheckListChange, checklist} = props;
     const [anchorEl, setAnchorEl] = useState(null);
-    const {form, setInForm} = useForm(checklist);
-    const checkListNameRef = useRef();
+    const {form, setForm, setInForm} = useForm(checklist);
 
     useUpdateEffect(() => {
-        onCheckListChange(form, index);
-    }, [form, index, onCheckListChange]);
-
-    function handleOpenNameForm()
-    {
-        handleMenuClose();
-        checkListNameRef.current.openForm()
-    }
+        onCheckListChange(form);
+    }, [form, onCheckListChange]);
 
     function handleMenuOpen(event)
     {
@@ -33,41 +25,37 @@ function CardChecklist(props)
         setAnchorEl(null);
     }
 
-    function handleNameChange(name)
-    {
-        setInForm("name", name);
-    }
-
     const handleListItemChange = useCallback((item, index) => {
-        setInForm(`checkItems[${index}]`, item);
+        setInForm(`[${index}]`, item);
     }, [setInForm]);
 
     function handleListItemRemove(id)
     {
-        setInForm('checkItems', _.reject(form.checkItems, {id}));
+        setForm(_.reject(form, {id}));
     }
 
     function checkItemsChecked()
     {
-        return _.sum(form.checkItems.map(x => (x.checked ? 1 : 0)));
+        return form.filter(({ checked }) => checked).length;
     }
 
     function handleListItemAdd(item)
     {
-        setInForm('checkItems', [...form.checkItems, item]);
+        setForm([...form, item]);
     }
 
     if ( !form )
     {
         return null;
     }
+
     return (
         <div className="mb-24">
 
             <div className="flex items-center justify-between mt-16 mb-12">
                 <div className="flex items-center">
                     <Icon className="text-20 mr-8">check_box</Icon>
-                    <CardChecklistName name={form.name} onNameChange={handleNameChange} ref={checkListNameRef}/>
+                    <Typography className="text-16 font-600">Checklist</Typography>
                 </div>
                 <div className="">
                     <IconButton
@@ -85,7 +73,7 @@ function CardChecklist(props)
                         open={Boolean(anchorEl)}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={props.onRemoveCheckList}>
+                        <MenuItem onClick={() => props.onRemoveCheckList()}>
                             <ListItemIcon className="min-w-40">
                                 <Icon>delete</Icon>
                             </ListItemIcon>
@@ -104,17 +92,17 @@ function CardChecklist(props)
             <div className="">
                 <div className="flex items-center pl-16">
                     <Typography className="flex font-600 mr-12">
-                        {checkItemsChecked() + ' / ' + form.checkItems.length}
+                        {checkItemsChecked() + ' / ' + form.length}
                     </Typography>
                     <LinearProgress
                         className="flex flex-1"
                         variant="determinate"
                         color="secondary"
-                        value={100 * checkItemsChecked() / form.checkItems.length}
+                        value={100 * checkItemsChecked() / form.length}
                     />
                 </div>
                 <List className="">
-                    {form.checkItems.map((checkItem, index) => (
+                    {form.map((checkItem, index) => (
                         <CardChecklistItem
                             item={checkItem}
                             key={checkItem.id}

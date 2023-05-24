@@ -21,11 +21,10 @@ export function closeCardDialog()
     }
 }
 
-export function updateCard(boardId, card)
+export function updateCard(card)
 {
     return (dispatch) => {
         const request = axios.post('/api/scrumboard-app/card/update', {
-            boardId,
             card
         });
 

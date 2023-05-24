@@ -62,7 +62,7 @@ function BoardCardForm(props)
 
     function handleSaveClick()
     {
-        dispatch(Actions.updateCard(board.id, cardForm));
+        dispatch(Actions.updateCard(cardForm));
     }
 
     function removeDue()
@@ -80,9 +80,9 @@ function BoardCardForm(props)
         setInForm('idMembers', _.xor(cardForm.idMembers, [memberId]));
     }
 
-    function addCheckList(newList)
+    function setCheckList()
     {
-        setInForm('checklists', [...cardForm.checklists, newList]);
+        setInForm('checklists', []);
     }
 
     function toggleOrderList(show)
@@ -121,8 +121,8 @@ function BoardCardForm(props)
         );
     }
 
-    const handleCheckListChange = useCallback((item, index) => {
-        setInForm(`checklists[${index}]`, item);
+    const handleCheckListChange = useCallback(checklists => {
+        setInForm('checklists', checklists);
     }, [setInForm]);
 
     const handleOrderListChange = useCallback(orderlist => {
@@ -131,8 +131,11 @@ function BoardCardForm(props)
 
     function removeCheckList(id)
     {
-        setInForm('checklists', []);
-        // setInForm('checklists', _.reject(cardForm.checklists, {id: id}));
+        if (id) {
+            setInForm('checklists', _.reject(cardForm.checklists, { id }));
+        } else {
+            setInForm('checklists', null);
+        }
     }
 
     function commentAdd(comment)
@@ -183,8 +186,8 @@ function BoardCardForm(props)
                             </IconButton>
 
                             <CheckListMenu
-                                checklistAdded={!!cardForm.checklists.length}
-                                onAddCheckList={addCheckList}
+                                checklistAdded={!!cardForm.checklists}
+                                onSetCheckList={setCheckList}
                                 onRemoveCheckList={removeCheckList}
                             />
 
@@ -384,15 +387,13 @@ function BoardCardForm(props)
                     </div>
                 )}
 
-                {cardForm.checklists.map((checklist, index) => (
+                {!!cardForm.checklists && (
                     <CardChecklist
-                        key={checklist.id}
-                        checklist={checklist}
-                        index={index}
+                        checklist={cardForm.checklists}
                         onCheckListChange={handleCheckListChange}
-                        onRemoveCheckList={() => removeCheckList(checklist.id)}
+                        onRemoveCheckList={removeCheckList}
                     />
-                ))}
+                )}
 
                 <div className="mb-24">
                     <div className="flex items-center mt-16 mb-12">

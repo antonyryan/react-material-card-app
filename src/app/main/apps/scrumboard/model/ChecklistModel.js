@@ -7,7 +7,7 @@ class ChecklistModel {
 
         this.id = item.id || FuseUtils.generateGUID();
         this.name = item.name || '';
-        this.checkItems = item.checkItems || [];
+        this.checkItems = item.checkItems || null;
     }
 }
 
