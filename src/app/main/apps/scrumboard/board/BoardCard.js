@@ -36,12 +36,18 @@ function BoardCard(props)
 
     function getCheckItemsChecked(card)
     {
-        return card.checklists.filter(({ checked }) => checked).length;
+        if (card.checklists) {
+            return card.checklists.filter(({ checked }) => checked).length;
+        }
+        return 0;
     }
 
     function getCheckItems(card)
     {
-        return card.checklists.length;
+        if (card.checklists) {
+            return card.checklists.length;
+        }
+        return 0;
     }
 
     function getCommentsCount(card)

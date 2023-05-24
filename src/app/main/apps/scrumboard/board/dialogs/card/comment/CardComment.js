@@ -2,20 +2,9 @@ import React from 'react';
 import {TextField, Button, Avatar} from '@material-ui/core';
 import {useForm} from '@fuse/hooks';
 import CommentModel from 'app/main/apps/scrumboard/model/CommentModel';
+import { getUserId } from 'app/auth';
 import _ from '@lodash';
 
-
-function getUserId()
-{
-    try {
-        const auth = JSON.parse(localStorage.getItem('auth'));
-        if (auth) {
-            return auth.id_user;
-        }
-    } catch (e) { }
-
-    return undefined;
-}
 
 function CardComment(props)
 {

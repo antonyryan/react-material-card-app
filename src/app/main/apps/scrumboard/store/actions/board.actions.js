@@ -2,6 +2,7 @@ import axios from 'axios';
 import {FuseUtils} from '@fuse';
 import history from '@history';
 import _ from '@lodash';
+import { getUserId } from 'app/auth';
 import {showMessage} from 'app/store/actions/fuse';
 import reorder, {reorderQuoteMap} from './reorder';
 import * as Actions from './index';
@@ -154,10 +155,12 @@ export function newCard(listId, cardTitle)
         new Promise((resolve, reject) => {
             request.then((response) => {
                 resolve(response.data);
+                const userId = getUserId();
 
                 const card = new CardModel({
                     name: cardTitle,
-                    id: response.data.card._id
+                    id: response.data.card._id,
+                    idMembers: userId && [ userId ]
                 });
                 
                 return dispatch({

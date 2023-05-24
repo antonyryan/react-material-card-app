@@ -138,11 +138,6 @@ function BoardCardForm(props)
         }
     }
 
-    function removeOrderList(id)
-    {
-        setInForm('orderlist', _.reject(cardForm.orderlist, { id }))
-    }
-
     function commentAdd(comment)
     {
         return setInForm('activities', [comment, ...cardForm.activities]);
