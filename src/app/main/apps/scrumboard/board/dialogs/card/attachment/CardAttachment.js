@@ -82,7 +82,7 @@ function CardAttachment(props)
                 </div>
             )
         }
-        case 'link':
+        default:
         {
             return (
                 <div className="flex w-full sm:w-1/2 mb-16" key={props.item.id}>
@@ -120,10 +120,6 @@ function CardAttachment(props)
                     </div>
                 </div>
             )
-        }
-        default:
-        {
-            return null;
         }
     }
 }

@@ -1,10 +1,60 @@
-import React, {useState} from 'react';
-import {Icon, IconButton, MenuItem} from '@material-ui/core';
+import React, {useState, useRef} from 'react';
+import {Icon, IconButton, Paper, MenuItem, TextField} from '@material-ui/core';
 import ToolbarMenu from './ToolbarMenu';
+import {makeStyles} from '@material-ui/styles';
+// Import React FilePond
+import { FilePond, registerPlugin } from "react-filepond";
+import axios from 'axios';
+
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
+
+const useStyle = makeStyles(theme => ({
+    filePicker: {
+        width: '300px',
+
+        '& .filepond--root': {
+            fontSize: 'initial',
+            transition: 'height ease .5s',
+            margin: 0
+        },
+
+        '& .filepond--panel-root': {
+            backgroundColor: 'white'
+        }
+    }
+    // 'filepond--panel-root': {}
+}));
 
 function AttachmentMenu(props)
 {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [files, setFiles] = useState([]);
+    const pond = useRef(null);
+    const classes = useStyle();
+
+    const server = {
+        url: axios.defaults.baseURL,
+        process: {
+            url: '/api/addAttachment',
+            method: 'POST',
+            // headers: axios.defaults.headers,
+            ondata: formData => {
+                formData.append('card_id', props.cardId);
+                return formData;
+            },
+            onload: response => props.onUpload(JSON.parse(response))
+        }
+    }
 
     function handleMenuOpen(event)
     {
@@ -16,6 +66,14 @@ function AttachmentMenu(props)
         setAnchorEl(null);
     }
 
+    function handleUploadFinish(error)
+    {
+        if (!error) {
+            setFiles([]);
+            handleMenuClose();
+        }
+    }
+
     return (
         <div>
             <IconButton color="inherit" onClick={handleMenuOpen}>
@@ -23,33 +81,15 @@ function AttachmentMenu(props)
             </IconButton>
             {anchorEl && 
                 <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
-                    {/* <form onSubmit={handleSubmit} className="p-16 flex flex-col items-end">
-                        <TextField
-                            label="Checklist title"
-                            name="name"
-                            value={form.name}
-                            onChange={handleChange}
-                            fullWidth
-                            className="mb-12"
-                            variant="outlined"
-                            required
-                            autoFocus
+                    <div className={classes.filePicker}>
+                        <FilePond
+                            ref={pond}
+                            files={files}
+                            server={server}
+                            instantUpload={false}
+                            onprocessfile={handleUploadFinish}
                         />
-                        <Button
-                            color="secondary"
-                            type="submit"
-                            disabled={isFormInvalid()}
-                            variant="contained"
-                        >
-                            Add
-                        </Button>
-                    </form>
-                    <MenuItem onClick={e => {
-                        handleMenuClose();
-                        props.onToggleOrderlist(!props.orderlist);
-                    }}>
-                        Add New
-                    </MenuItem> */}
+                    </div>
                 </ToolbarMenu>
             }
         </div>

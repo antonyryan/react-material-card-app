@@ -147,7 +147,7 @@ function BoardCard(props)
                             </div>
 
                             <div className="flex items-center justify-end">
-                                {card.attachments && (
+                                {card.attachments && card.attachments.length > 0 && (
                                     <span className="flex items-center ml-12">
                                         <Icon className="text-18 mr-8" color="action">attachment</Icon>
                                         <Typography color="textSecondary">{card.attachments.length}</Typography>

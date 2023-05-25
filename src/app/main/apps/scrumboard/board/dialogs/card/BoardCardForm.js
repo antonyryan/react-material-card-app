@@ -27,6 +27,7 @@ import DueMenu from './toolbar/DueMenu';
 import LabelsMenu from './toolbar/LabelsMenu';
 import MembersMenu from './toolbar/MembersMenu';
 import OrderListMenu from './toolbar/OrderListMenu';
+import AttachmentMenu from './toolbar/AttachmentMenu';
 import CheckListMenu from './toolbar/CheckListMenu';
 import OptionsMenu from './toolbar/OptionsMenu';
 import CardOrderlist from './orderlist/CardOrderlist';
@@ -108,13 +109,11 @@ function BoardCardForm(props)
 
     function removeAttachment(attachmentId)
     {
-        setForm(
-            {
-                ...cardForm,
-                attachments      : _.reject(cardForm.attachments, {id: attachmentId}),
-                idAttachmentCover: cardForm.idAttachmentCover === attachmentId ? '' : cardForm.idAttachmentCover
-            }
-        );
+        setForm({
+            ...cardForm,
+            attachments      : _.reject(cardForm.attachments, {id: attachmentId}),
+            idAttachmentCover: cardForm.idAttachmentCover === attachmentId ? '' : cardForm.idAttachmentCover
+        });
     }
 
     const handleCheckListChange = useCallback(checklists => {
@@ -137,6 +136,22 @@ function BoardCardForm(props)
     function commentAdd(comment)
     {
         return setInForm('activities', [comment, ...cardForm.activities]);
+    }
+
+    function handleAttachUpload(attachment)
+    {
+        const date = new Date();
+        const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+        const updatedAttachments = cardForm.attachments.concat({ ...attachment, time })
+
+        if (!cardForm.idAttachmentCover) {
+            const coverImage = _.find(updatedAttachments, { type: 'image'});
+            if (coverImage) {
+                cardForm.idAttachmentCover = coverImage.id;
+            }
+        }
+        
+        setInForm('attachments', updatedAttachments);
     }
 
     return (
@@ -177,9 +192,10 @@ function BoardCardForm(props)
                                 onToggleOrderlist={toggleOrderList}
                             />
 
-                            <IconButton color="inherit">
-                                <Icon>attachment</Icon>
-                            </IconButton>
+                            <AttachmentMenu
+                                cardId={cardForm.id}
+                                onUpload={handleAttachUpload}
+                            />
 
                             <CheckListMenu
                                 checklistAdded={!!cardForm.checklists}
