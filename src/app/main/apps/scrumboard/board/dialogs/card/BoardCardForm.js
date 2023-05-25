@@ -83,7 +83,7 @@ function BoardCardForm(props)
 
     function toggleOrderList(show)
     {
-        setInForm('orderlist', show ? [] : null);
+        setInForm('orderlists', show ? [] : null);
     }
 
     function chipChange(name, value)
@@ -121,8 +121,8 @@ function BoardCardForm(props)
         setInForm('checklists', checklists);
     }, [setInForm]);
 
-    const handleOrderListChange = useCallback(orderlist => {
-        setInForm('orderlist', orderlist);
+    const handleOrderListChange = useCallback(orderlists => {
+        setInForm('orderlists', orderlists);
     }, [setInForm]);
 
     function removeCheckList(id)
@@ -173,7 +173,7 @@ function BoardCardForm(props)
                             />
     
                             <OrderListMenu
-                                orderlist={cardForm.orderlist}
+                                orderlist={cardForm.orderlists}
                                 onToggleOrderlist={toggleOrderList}
                             />
 
@@ -355,9 +355,9 @@ function BoardCardForm(props)
                     )}
                 </div>
 
-                {!!cardForm.orderlist && (
+                {!!cardForm.orderlists && (
                     <CardOrderlist
-                        orderlist={cardForm.orderlist}
+                        orderlist={cardForm.orderlists}
                         onOrderListChange={handleOrderListChange}
                     />
                 )}
