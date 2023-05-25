@@ -16,16 +16,24 @@ function OptionsMenu(props)
         setAnchorEl(null);
     }
 
+    function handleRemoveCard()
+    {
+        handleMenuClose();
+        props.onRemoveCard();
+    }
+
     return (
         <div>
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 <Icon>more_horiz</Icon>
             </IconButton>
-            <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
-                <MenuItem onClick={props.onRemoveCard}>
-                    Remove Card
-                </MenuItem>
-            </ToolbarMenu>
+            {anchorEl && (
+                <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
+                    <MenuItem onClick={handleRemoveCard}>
+                        Remove Card
+                    </MenuItem>
+                </ToolbarMenu>
+            )}
         </div>
     );
 }

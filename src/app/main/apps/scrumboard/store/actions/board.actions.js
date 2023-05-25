@@ -31,7 +31,16 @@ export function getBoard(params)
         request.then(
             (response) => {
                 const board = _.get(response, 'data.boards[0]');
+                const fields = ['idMembers', 'idLabels', 'attachments', 'activities'];
                 
+                board.cards.forEach(card => {
+                    fields.forEach(field => {
+                        card[field] = card.detail[field] ? card.detail[field] : [];
+                    });
+                    card['orderlists'] = card.detail['orderlists']
+                    card['checklists'] = card.detail['checklists']
+                });
+
                 if (board) {
                     dispatch({
                         type   : GET_BOARD,

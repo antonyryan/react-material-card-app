@@ -24,11 +24,23 @@ export function closeCardDialog()
 export function updateCard(card)
 {
     return (dispatch) => {
+        const detail = {};
+        const fields = ['idMembers', 'idLabels', 'attachments', 'activities'];
+
+        fields.forEach(field => {
+            if (card[field]) {
+                detail[field] = card[field];
+            }   
+        });
+
+        detail['orderlists'] = card['orderlists']
+        detail['checklists'] = card['checklists']
+
         const request = axios.post('/api/card/add', {
             id_card: card.id,
             title: card.name,
             description: card.description,
-            detail: card
+            detail
         });
 
         dispatch({

@@ -69,8 +69,12 @@ function BoardCard(props)
                         onClick={(ev) => handleCardClick(ev, card)}
                     >
 
-                        {board.settings.cardCoverImages && card.idAttachmentCover !== '' && (
-                            <img className="block" src={_.find(card.attachments, {id: card.idAttachmentCover}).src} alt="card cover"/>
+                        {board.settings.cardCoverImages && !!card.idAttachmentCover && (
+                            <img
+                                className="block"
+                                alt="card cover"
+                                src={_.find(card.attachments, {id: card.idAttachmentCover}).src}
+                            />
                         )}
 
                         <div className="p-16 pb-0">
@@ -145,15 +149,15 @@ function BoardCard(props)
                             <div className="flex items-center justify-end">
                                 {card.attachments && (
                                     <span className="flex items-center ml-12">
-                                            <Icon className="text-18 mr-8" color="action">attachment</Icon>
-                                            <Typography color="textSecondary">{card.attachments.length}</Typography>
-                                        </span>
+                                        <Icon className="text-18 mr-8" color="action">attachment</Icon>
+                                        <Typography color="textSecondary">{card.attachments.length}</Typography>
+                                    </span>
                                 )}
                                 {commentsCount > 0 && (
                                     <span className="flex items-center ml-12">
-                                            <Icon className="text-18 mr-8" color="action">comment</Icon>
-                                            <Typography color="textSecondary">{commentsCount}</Typography>
-                                        </span>
+                                        <Icon className="text-18 mr-8" color="action">comment</Icon>
+                                        <Typography color="textSecondary">{commentsCount}</Typography>
+                                    </span>
                                 )}
                             </div>
                         </div>

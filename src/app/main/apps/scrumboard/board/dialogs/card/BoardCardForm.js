@@ -247,15 +247,15 @@ function BoardCardForm(props)
                         variant="outlined"
                         fullWidth
                         required
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    {cardForm.subscribed && (
-                                        <Icon className="text-20" color="action">remove_red_eye</Icon>
-                                    )}
-                                </InputAdornment>
-                            )
-                        }}
+                        // InputProps={{
+                        //     endAdornment: (
+                        //         <InputAdornment position="end">
+                        //             {cardForm.subscribed && (
+                        //                 <Icon className="text-20" color="action">remove_red_eye</Icon>
+                        //             )}
+                        //         </InputAdornment>
+                        //     )
+                        // }}
                     />
                 </div>
 
