@@ -95,17 +95,6 @@ const boardReducer = function (state = initialState, action) {
                 })
             };
         }
-        case Actions.REMOVE_CARD:
-        {
-            return {
-                ...state,
-                cards: _.reject(state.cards, {id: action.cardId}),
-                lists: state.lists.map(list => {
-                    _.set(list, 'idCards', _.reject(list.idCards, (id) => id === action.cardId));
-                    return list;
-                })
-            };
-        }
         case Actions.RENAME_LIST:
         {
             return {

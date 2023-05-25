@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {RootRef, Card, CardContent, CardActions} from '@material-ui/core';
 import {darken} from '@material-ui/core/styles/colorManipulator';
 import {makeStyles} from '@material-ui/styles';
@@ -21,10 +21,16 @@ function BoardList(props)
 {
     const classes = useStyles(props);
     const contentScrollEl = useRef(null);
+    const [cardAddForm, setCardAddForm] = useState(false);
 
     function handleCardAdded()
     {
         contentScrollEl.current.scrollTop = contentScrollEl.current.scrollHeight;
+    }
+
+    function handleSetCardAddForm(show)
+    {
+        setCardAddForm(show)
     }
 
     return (
@@ -43,6 +49,7 @@ function BoardList(props)
                         <BoardListHeader
                             list={props.list}
                             className="border-b-1"
+                            showCardAddForm={() => handleSetCardAddForm(true)}
                             // handleProps={provided.dragHandleProps}
                         />
 
@@ -71,7 +78,12 @@ function BoardList(props)
                         </RootRef>
 
                         <CardActions className="p-0 flex-shrink-0">
-                            <BoardAddCard listId={props.list.id} onCardAdded={handleCardAdded}/>
+                            <BoardAddCard
+                                listId={props.list.id}
+                                onCardAdded={handleCardAdded}
+                                cardAddForm={cardAddForm}
+                                hideCardAddForm={() => handleSetCardAddForm(false)}
+                            />
                         </CardActions>
                     </Card>
         //         </div>

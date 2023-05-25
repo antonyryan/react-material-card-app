@@ -15,25 +15,25 @@ function BoardListHeader(props)
         title: props.list.name
     });
 
-    useEffect(() => {
-        if ( !formOpen )
-        {
-            resetForm();
-        }
-        if ( anchorEl )
-        {
-            setAnchorEl(null);
-        }
-
-    }, [anchorEl, formOpen, resetForm]);
-
-    useEffect(() => {
-        setForm({title: props.list.name});
-    }, [props.list.name, setForm]);
+    // useEffect(() => {
+    //     if ( !formOpen )
+    //     {
+    //         resetForm();
+    //     }
+    //     if ( anchorEl )
+    //     {
+    //         setAnchorEl(null);
+    //     }
+    // }, [formOpen]);
+    
+    // useEffect(() => {
+    //     setForm({title: props.list.name});
+    // }, [props.list.name, setForm]);
 
     function handleMenuClick(event)
     {
-        setAnchorEl(event.currentTarget);
+        props.showCardAddForm();
+        // setAnchorEl(event.target);
     }
 
     function handleMenuClose()
@@ -114,7 +114,7 @@ function BoardListHeader(props)
                         variant="outlined"
                         size="small"
                     >
-                        <Icon className="text-20">more_vert</Icon>
+                        <Icon className="text-20">add</Icon>
                     </IconButton>
                     <Menu
                         id="actions-menu"

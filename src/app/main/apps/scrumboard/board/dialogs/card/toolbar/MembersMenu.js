@@ -21,27 +21,29 @@ function MembersMenu(props)
             <IconButton color="inherit" onClick={handleMenuOpen}>
                 <Icon>account_circle</Icon>
             </IconButton>
-            <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
-                <div className="">
-                    {props.members.map(member => {
-                        return (
-                            <MenuItem
-                                className="px-8"
-                                key={member.id}
-                                onClick={(ev) => {
-                                    props.onToggleMember(member.id)
-                                }}
-                            >
-                                <Checkbox checked={props.idMembers.includes(member.id)}/>
-                                <Avatar className="w-32 h-32" src={member.avatar}/>
-                                <ListItemText className="mx-5">
-                                    {member.name}
-                                </ListItemText>
-                            </MenuItem>
-                        );
-                    })}
-                </div>
-            </ToolbarMenu>
+            {props.members && props.members.length > 0 && (
+                <ToolbarMenu state={anchorEl} onClose={handleMenuClose}>
+                    <div className="">
+                        {props.members.map(member => {
+                            return (
+                                <MenuItem
+                                    className="px-8"
+                                    key={member.id}
+                                    onClick={(ev) => {
+                                        props.onToggleMember(member.id)
+                                    }}
+                                >
+                                    <Checkbox checked={props.idMembers.includes(member.id)}/>
+                                    <Avatar className="w-32 h-32" src={member.avatar}/>
+                                    <ListItemText className="mx-5">
+                                        {member.name}
+                                    </ListItemText>
+                                </MenuItem>
+                            );
+                        })}
+                    </div>
+                </ToolbarMenu>
+            )}
         </div>
     );
 }

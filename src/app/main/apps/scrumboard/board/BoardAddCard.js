@@ -14,12 +14,12 @@ function BoardAddCard(props)
         title: ''
     });
 
-    useEffect(() => {
-        if ( !formOpen )
-        {
-            resetForm();
-        }
-    }, [formOpen, resetForm]);
+    // useEffect(() => {
+    //     if ( !formOpen )
+    //     {
+    //         resetForm();
+    //     }
+    // }, [formOpen, resetForm]);
 
     function handleOpenForm()
     {
@@ -28,7 +28,8 @@ function BoardAddCard(props)
 
     function handleCloseForm()
     {
-        setFormOpen(false);
+        props.hideCardAddForm(false)
+        // setFormOpen(false);
     }
 
     function handleSubmit(ev)
@@ -46,9 +47,8 @@ function BoardAddCard(props)
         return form.title.length === 0;
     }
 
-    return (
-        <div className="w-full border-t-1">
-            {formOpen ? (
+    return props.cardAddForm && (
+            <div className="w-full border-t-1">
                 <ClickAwayListener onClickAway={handleCloseForm}>
                     <form className="p-16" onSubmit={handleSubmit}>
 
@@ -86,20 +86,18 @@ function BoardAddCard(props)
                         </div>
                     </form>
                 </ClickAwayListener>
-            ) : (
-                <Button
-                    onClick={handleOpenForm}
-                    classes={{
-                        root : "normal-case font-600 w-full rounded-none h-48",
-                        label: "justify-start"
-                    }}
-                >
-                    <Icon className="text-20 mr-8">add</Icon>
-                    Add a card
-                </Button>
-            )}
-        </div>
-    );
+            </div>
+        )
+                // <Button
+                //     onClick={handleOpenForm}
+                //     classes={{
+                //         root : "normal-case font-600 w-full rounded-none h-48",
+                //         label: "justify-start"
+                //     }}
+                // >
+                //     <Icon className="text-20 mr-8">add</Icon>
+                //     Add a card
+                // </Button>
 }
 
 export default BoardAddCard;

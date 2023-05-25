@@ -122,7 +122,7 @@ function BoardCard(props)
                                 <div className="flex flex-wrap mb-12">
                                     {card.idMembers.map(id => {
                                         const member = _.find(board.members, {id});
-                                        return (
+                                        return member && (
                                             <Tooltip title={member.name} key={id}>
                                                 <Avatar className="mr-8 w-32 h-32" src={member.avatar}/>
                                             </Tooltip>
