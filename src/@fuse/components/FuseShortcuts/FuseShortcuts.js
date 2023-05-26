@@ -5,6 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import axios from 'axios';
 
 import {makeStyles} from '@material-ui/styles';
 import * as UserActions from 'app/auth/store/actions';
@@ -29,7 +30,7 @@ const useStyles = makeStyles({
         color: amber[600]
     },
     innerFilter: {
-        minWidth: '100px',
+        minWidth: '150px',
         paddingTop: '10px',
         paddingBottom: '10px',
     },
@@ -52,14 +53,34 @@ function FuseShortcuts(props)
     const [navigation, setNavigation] = useState(null);
     const shortcutItems = shortcuts ? shortcuts.map(id => FuseUtils.findById(navigationData, id)) : [];
 
-    useEffect(() => {
-        function flattenNavigation()
-        {
-            setNavigation(FuseUtils.getFlatNavigation(navigationData));
-        }
+    const filterType = ['kinds', 'departments'];
+    const [filter, setFilter] = useState({});
+    const [filterSelected, setFilterSelected]
+        = useState(Object.assign(
+            {},
+            ...filterType.map(type => ({
+                [type]: 'all'
+            }))
+        ));
 
-        flattenNavigation();
-    }, [props.location, navigationData]);
+    useEffect(
+        () => setNavigation(FuseUtils.getFlatNavigation(navigationData)),
+        [props.location, navigationData]
+    );
+
+    useEffect(() => {
+        dispatch(() => {
+            Promise.all(filterType.map(type => {
+                const request = axios.get(`/api/board/${type}`);
+                return new Promise((resolve, reject) =>  request.then(({ data }) => resolve(data)));
+            })).then(data => setFilter(Object.assign({}, ...data)));
+        });
+    }, []);
+
+    function handleFilterChange(type)
+    {
+        return e => setFilterSelected({ ...filterSelected, [type]: e.target.value });
+    }
 
     function addMenuClick(event)
     {
@@ -147,53 +168,32 @@ function FuseShortcuts(props)
                     </Link>
                 ))}
 
-                <Select
-                    value={10}
-                    // onChange={handleChange}
-                    classes={{select: classes.innerFilter}}
-                    className={classes.filter}
-                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
-                >
-                    <MenuItem value={10}>Sandwitch</MenuItem>
-                    <MenuItem value={20}>Banana</MenuItem>
-                    <MenuItem value={30}>Orange</MenuItem>
-                </Select>
+                {filterType.map(type => (
+                    <Select
+                        key={type}
+                        value={filterSelected[type]}
+                        onChange={handleFilterChange(type)}
+                        classes={{select: classes.innerFilter}}
+                        className={classes.filter}
+                        input={
+                            <OutlinedInput
+                                labelWidth={0}
+                                name="age"
+                                id="outlined-age-simple"
+                            />
+                        }
+                    >
+                        <MenuItem value={ 'all' }>
+                            All
+                        </MenuItem>
 
-                <Select
-                    value={10}
-                    // onChange={handleChange}
-                    classes={{select: classes.innerFilter}}
-                    className={classes.filter}
-                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
-                >
-                    <MenuItem value={10}>One</MenuItem>
-                    <MenuItem value={20}>Two</MenuItem>
-                    <MenuItem value={30}>Three</MenuItem>
-                </Select>
-
-                <Select
-                    value={10}
-                    // onChange={handleChange}
-                    classes={{select: classes.innerFilter}}
-                    className={classes.filter}
-                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
-                >
-                    <MenuItem value={10}>Google</MenuItem>
-                    <MenuItem value={20}>Apple</MenuItem>
-                    <MenuItem value={30}>Amazon</MenuItem>
-                </Select>
-
-                <Select
-                    value={10}
-                    // onChange={handleChange}
-                    classes={{select: classes.innerFilter}}
-                    className={classes.filter}
-                    input={<OutlinedInput labelWidth={0} name="age" id="outlined-age-simple" />}
-                >
-                    <MenuItem value={10}>Infant</MenuItem>
-                    <MenuItem value={20}>Junvenile</MenuItem>
-                    <MenuItem value={30}>Old</MenuItem>
-                </Select>
+                        {filter[type] && filter[type].map(({ code, label }) => (
+                            <MenuItem key={ code } value={ code }>
+                                { label }
+                            </MenuItem>
+                        ))}
+                    </Select>
+                ))}
 
                 {/* <Tooltip title="Click to add/remove shortcut" placement={props.variant === "horizontal" ? "bottom" : "left"}>
                     <IconButton

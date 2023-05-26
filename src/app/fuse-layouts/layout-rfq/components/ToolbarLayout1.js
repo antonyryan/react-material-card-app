@@ -2,6 +2,7 @@ import React from 'react';
 import {AppBar, Hidden, Toolbar} from '@material-ui/core';
 import {makeStyles, ThemeProvider} from '@material-ui/styles';
 import {FuseSearch, FuseShortcuts} from '@fuse';
+import clsx from 'clsx';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 // import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
 import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
@@ -12,6 +13,12 @@ const useStyles = makeStyles(theme => ({
         width          : 1,
         height         : 64,
         backgroundColor: theme.palette.divider
+    },
+
+    filter: {
+        [theme.breakpoints.down('md')]: {
+            display: 'none !important'
+        }
     }
 }));
 
@@ -35,9 +42,7 @@ function ToolbarLayout1(props)
                     )}
 
                     <div className="flex flex-1">
-                        <Hidden mdDown>
-                            <FuseShortcuts className="px-16"/>
-                        </Hidden>
+                        <FuseShortcuts className={clsx("px-16", classes.filter)}/>
                     </div>
 
                     <div className="flex">

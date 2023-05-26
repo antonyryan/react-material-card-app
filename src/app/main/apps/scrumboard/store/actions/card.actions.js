@@ -40,6 +40,7 @@ export function updateCard(card)
             id_card: card.id,
             title: card.name,
             description: card.description,
+            due: card.due,
             detail
         });
 
