@@ -73,7 +73,7 @@ function BoardCard(props)
                             <img
                                 className="block"
                                 alt="card cover"
-                                src={_.find(card.attachments, {id: card.idAttachmentCover}).src}
+                                src={_.find(card.attachments, {id: card.idAttachmentCover}).thumbnail}
                             />
                         )}
 

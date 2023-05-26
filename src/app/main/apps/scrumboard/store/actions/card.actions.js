@@ -25,7 +25,7 @@ export function updateCard(card)
 {
     return (dispatch) => {
         const detail = {};
-        const fields = ['idMembers', 'idLabels', 'attachments', 'activities'];
+        const fields = ['idMembers', 'idLabels', 'attachments', 'activities', 'idAttachmentCover'];
 
         fields.forEach(field => {
             if (card[field]) {

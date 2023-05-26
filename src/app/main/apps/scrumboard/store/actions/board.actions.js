@@ -31,7 +31,7 @@ export function getBoard(params)
         request.then(
             (response) => {
                 const board = _.get(response, 'data.boards[0]');
-                const fields = ['idMembers', 'idLabels', 'attachments', 'activities'];
+                const fields = ['idMembers', 'idLabels', 'attachments', 'activities', 'idAttachmentCover'];
                 
                 board.cards.forEach(card => {
                     fields.forEach(field => {
