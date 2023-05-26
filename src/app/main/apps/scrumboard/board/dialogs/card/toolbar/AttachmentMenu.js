@@ -45,11 +45,11 @@ function AttachmentMenu(props)
     const server = {
         url: axios.defaults.baseURL,
         process: {
-            url: '/api/addAttachment',
+            url: '/api/card/attach',
             method: 'POST',
-            // headers: axios.defaults.headers,
+            headers: axios.defaults.headers,
             ondata: formData => {
-                formData.append('card_id', props.cardId);
+                formData.append('id_card', props.cardId);
                 return formData;
             },
             onload: response => props.onUpload(JSON.parse(response))

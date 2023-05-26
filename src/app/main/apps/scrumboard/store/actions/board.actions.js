@@ -37,6 +37,7 @@ export function getBoard(params)
                     fields.forEach(field => {
                         card[field] = card.detail[field] ? card.detail[field] : [];
                     });
+                    card['due'] = card['due_date'].slice(0, 10);
                     card['orderlists'] = card.detail['orderlists']
                     card['checklists'] = card.detail['checklists']
                 });

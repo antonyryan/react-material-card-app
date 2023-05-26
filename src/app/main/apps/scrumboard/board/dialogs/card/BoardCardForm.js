@@ -388,7 +388,7 @@ function BoardCardForm(props)
                             {cardForm.attachments.map(item => (
                                 <CardAttachment
                                     item={item}
-                                    card={cardForm}
+                                    cover={cardForm.idAttachmentCover}
                                     makeCover={makeCover}
                                     removeCover={removeCover}
                                     removeAttachment={removeAttachment}
