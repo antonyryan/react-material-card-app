@@ -11,6 +11,7 @@ import {makeStyles} from '@material-ui/styles';
 import * as UserActions from 'app/auth/store/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import {FuseUtils, FuseAnimateGroup} from '@fuse';
+import _ from 'lodash';
 import {Link} from 'react-router-dom';
 import amber from '@material-ui/core/colors/amber';
 import clsx from 'clsx';
@@ -53,13 +54,13 @@ function FuseShortcuts(props)
     const [navigation, setNavigation] = useState(null);
     const shortcutItems = shortcuts ? shortcuts.map(id => FuseUtils.findById(navigationData, id)) : [];
 
-    const filterType = ['kinds', 'departments'];
+    const filterType = ['kinds', 'departments', 'users', 'customer'];
     const [filter, setFilter] = useState({});
     const [filterSelected, setFilterSelected]
         = useState(Object.assign(
             {},
             ...filterType.map(type => ({
-                [type]: 'all'
+                [type]: 0
             }))
         ));
 
@@ -71,15 +72,36 @@ function FuseShortcuts(props)
     useEffect(() => {
         dispatch(() => {
             Promise.all(filterType.map(type => {
-                const request = axios.get(`/api/board/${type}`);
-                return new Promise((resolve, reject) =>  request.then(({ data }) => resolve(data)));
+                const request = type === 'customer'
+                    ? axios.get('/api/board/users', { params: { department: 'customer' } })
+                    : axios.get(`/api/board/${type}`);
+                return new Promise((resolve, reject) =>
+                    request.then(({ data }) =>
+                        resolve( type === 'users' || type === 'customer'
+                            ? { [type]: data.users.map(({ id_user, name, lastname }) =>
+                                ({ code: id_user, label: `${name} ${lastname}` })) }
+                            : data )));
             })).then(data => setFilter(Object.assign({}, ...data)));
         });
     }, []);
 
     function handleFilterChange(type)
     {
-        return e => setFilterSelected({ ...filterSelected, [type]: e.target.value });
+        return e => {
+            const newFilterSelected = { ...filterSelected, [type]: e.target.value };
+
+            if (e.target.value !== filterSelected[type]) {
+                const param = {};
+                for (let p in newFilterSelected) {
+                    if (newFilterSelected[p] !== 0) {
+                        param[p] = newFilterSelected[p];
+                    }
+                }
+                props.onFilterSelected(param);
+            }
+            
+            setFilterSelected(newFilterSelected);
+        };
     }
 
     function addMenuClick(event)
@@ -183,7 +205,7 @@ function FuseShortcuts(props)
                             />
                         }
                     >
-                        <MenuItem value={ 'all' }>
+                        <MenuItem value={0}>
                             All
                         </MenuItem>
 

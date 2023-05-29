@@ -18,16 +18,17 @@ function Board(props)
 {
     const dispatch = useDispatch();
     const board = useSelector(({scrumboardApp}) => scrumboardApp.board);
+    const { filterSelected } = props;
 
     const containerRef = useRef(null);
     const [settingsDrawerOpen, setSettingsDrawerOpen] = useState(false);
 
     useEffect(() => {
-        dispatch(Actions.getBoard(props.match.params));
+        dispatch(Actions.getBoard(filterSelected));
         return () => {
-            dispatch(Actions.resetBoard());
+            // dispatch(Actions.resetBoard());
         }
-    }, [dispatch, props.match.params]);
+    }, [dispatch, filterSelected]);
 
     function onDragEnd(result)
     {

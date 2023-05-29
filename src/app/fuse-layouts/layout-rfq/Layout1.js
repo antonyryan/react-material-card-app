@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {renderRoutes} from 'react-router-config'
 import {FuseScrollbars, FuseMessage, FuseDialog, FuseSuspense} from '@fuse';
 import {makeStyles} from '@material-ui/styles';
@@ -82,6 +82,8 @@ function Layout1(props)
 
     // console.warn('FuseLayout:: rendered');
 
+    const [filterSelected, setFilterSelected] = useState({ users: -1 });
+
     switch ( config.scroll )
     {
         case 'body':
@@ -146,7 +148,7 @@ function Layout1(props)
 
                             <div className={classes.contentWrapper}>
                                 {config.toolbar.display && config.toolbar.position === 'below' && config.toolbar.style === 'fixed' && (
-                                    <ToolbarLayout1/>
+                                    <ToolbarLayout1 onFilterSelected={newValue => setFilterSelected(newValue)}/>
                                 )}
 
                                 <FuseScrollbars className={classes.content} scrollToTopOnChildChange>
@@ -157,7 +159,7 @@ function Layout1(props)
                                     <FuseDialog/>
 
                                     <FuseSuspense>
-                                        {renderRoutes(routes)}
+                                        {renderRoutes(routes, { filterSelected })}
                                     </FuseSuspense>
 
                                     {props.children}

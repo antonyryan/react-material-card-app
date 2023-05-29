@@ -1,6 +1,8 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
+const Board = React.lazy(() => import('./board/Board'));
+
 export const ScrumboardAppConfig = {
     settings: {
         layout: {}
@@ -12,7 +14,7 @@ export const ScrumboardAppConfig = {
         {
             // path     : '/apps/scrumboard/boards/:boardId/:boardUri?',
             path     : '/board',
-            component: React.lazy(() => import('./board/Board'))
+            component: Board
         }
         /*
         {

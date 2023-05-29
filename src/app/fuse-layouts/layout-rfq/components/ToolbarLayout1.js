@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     filter: {
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none !important'
         }
     }
@@ -42,7 +42,10 @@ function ToolbarLayout1(props)
                     )}
 
                     <div className="flex flex-1">
-                        <FuseShortcuts className={clsx("px-16", classes.filter)}/>
+                        <FuseShortcuts
+                            className={clsx("px-16", classes.filter)}
+                            onFilterSelected={props.onFilterSelected}
+                        />
                     </div>
 
                     <div className="flex">
