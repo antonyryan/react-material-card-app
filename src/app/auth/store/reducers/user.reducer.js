@@ -1,6 +1,18 @@
 import * as Actions from '../actions';
 
-const initialState = {
+let data = null;
+
+try {
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    const { email, name, lastname } = auth;
+   
+    data = { email, displayName: `${name} ${lastname}`};
+} catch (e) {}
+
+const initialState = data ? {
+    role: [],
+    data: { ...data }
+} : {
     role: [],//guest
     data: {
         'displayName': 'John Doe',
@@ -13,7 +25,7 @@ const initialState = {
             'todo'
         ]
     }
-};
+}
 
 const user = function (state = initialState, action) {
     switch ( action.type )

@@ -30,7 +30,7 @@ function UserMenu(props)
                     :
                     (
                         <Avatar className="">
-                            {user.data.displayName[0]}
+                            {user.data.displayName.length > 0 && user.data.displayName[0]}
                         </Avatar>
                     )
                 }
