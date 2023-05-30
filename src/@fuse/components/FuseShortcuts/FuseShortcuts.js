@@ -85,6 +85,15 @@ function FuseShortcuts(props)
         });
     }, []);
 
+    function getFilterField(p) {
+        switch (p) {
+            case 'kinds': return 'kind';
+            case 'departments': return 'department';
+            case 'users': return 'id_user';
+            default: return 'id_user';
+        }
+    }
+
     function handleFilterChange(type)
     {
         return e => {
@@ -94,7 +103,7 @@ function FuseShortcuts(props)
                 const param = {};
                 for (let p in newFilterSelected) {
                     if (newFilterSelected[p] !== 0) {
-                        param[p] = newFilterSelected[p];
+                        param[getFilterField(p)] = newFilterSelected[p];
                     }
                 }
                 props.onFilterSelected(param);
