@@ -151,8 +151,9 @@ export function reorderCard(result)
     }
 }
 
-export function newCard(listId, cardTitle)
+export function newCard(cardTitle)
 {
+    const listId = 'new';
     const request = axios.post('/api/card/add', {
         title: cardTitle,
         state: listId

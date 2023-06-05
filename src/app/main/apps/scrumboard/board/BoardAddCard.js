@@ -35,7 +35,7 @@ function BoardAddCard(props)
     function handleSubmit(ev)
     {
         ev.preventDefault();
-        dispatch(Actions.newCard(props.listId, form.title))
+        dispatch(Actions.newCard(form.title))
             .then(() => {
                 props.onCardAdded();
             });
@@ -47,47 +47,47 @@ function BoardAddCard(props)
         return form.title.length === 0;
     }
 
-    return props.cardAddForm && (
-            <div className="w-full border-t-1">
-                <ClickAwayListener onClickAway={handleCloseForm}>
-                    <form className="p-16" onSubmit={handleSubmit}>
+    return (
+        <div className="w-full border-t-1">
+            <ClickAwayListener onClickAway={handleCloseForm}>
+                <form className="p-16" onSubmit={handleSubmit}>
 
-                        <TextField
-                            className="mb-16"
-                            required
-                            fullWidth
-                            variant="outlined"
-                            label="Card title"
-                            autoFocus
-                            name="title"
-                            value={form.title}
-                            onChange={handleChange}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleCloseForm}>
-                                            <Icon className="text-18">close</Icon>
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                    <TextField
+                        className="mb-16"
+                        required
+                        fullWidth
+                        variant="outlined"
+                        label="Card title"
+                        autoFocus
+                        name="title"
+                        value={form.title}
+                        onChange={handleChange}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={handleCloseForm}>
+                                        <Icon className="text-18">close</Icon>
+                                    </IconButton>
+                                </InputAdornment>
+                            )
+                        }}
+                    />
 
-                        <div className="flex justify-between items-center">
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                type="submit"
-                                disabled={isFormInvalid()}
-                            >
-                                Add
-                            </Button>
+                    <div className="flex justify-between items-center">
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            type="submit"
+                            disabled={isFormInvalid()}
+                        >
+                            Add
+                        </Button>
 
-                        </div>
-                    </form>
-                </ClickAwayListener>
-            </div>
-        )
+                    </div>
+                </form>
+            </ClickAwayListener>
+        </div>
+    )
                 // <Button
                 //     onClick={handleOpenForm}
                 //     classes={{

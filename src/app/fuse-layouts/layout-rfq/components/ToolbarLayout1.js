@@ -45,6 +45,7 @@ function ToolbarLayout1(props)
                         <FuseShortcuts
                             className={clsx("px-16", classes.filter)}
                             onFilterSelected={props.onFilterSelected}
+                            onNewCardClick={props.onNewCardClick}
                         />
                     </div>
 

@@ -30,6 +30,9 @@ const useStyles = makeStyles({
     addIcon: {
         color: amber[600]
     },
+    newCard: {
+        padding: '0 7.5px'
+    },
     innerFilter: {
         minWidth: '150px',
         paddingTop: '10px',
@@ -199,6 +202,14 @@ function FuseShortcuts(props)
                     </Link>
                 ))}
 
+                <IconButton
+                    className={clsx("mx-16", classes.newCard)}
+                    onClick={props.onNewCardClick}
+                    size="small"
+                >
+                    <Icon>add</Icon>
+                </IconButton>
+                
                 {filterType.map(type => (
                     <Select
                         key={type}

@@ -83,6 +83,7 @@ function Layout1(props)
     // console.warn('FuseLayout:: rendered');
 
     const [filterSelected, setFilterSelected] = useState({ users: -1 });
+    const [newCardForm, setNewCardForm] = useState(false);
 
     switch ( config.scroll )
     {
@@ -148,10 +149,16 @@ function Layout1(props)
 
                             <div className={classes.contentWrapper}>
                                 {config.toolbar.display && config.toolbar.position === 'below' && config.toolbar.style === 'fixed' && (
-                                    <ToolbarLayout1 onFilterSelected={newValue => setFilterSelected(newValue)}/>
+                                    <ToolbarLayout1
+                                        onFilterSelected={newValue => setFilterSelected(newValue)}
+                                        onNewCardClick={() => setNewCardForm(true)}
+                                    />
                                 )}
 
-                                <FuseScrollbars className={classes.content} scrollToTopOnChildChange>
+                                <FuseScrollbars
+                                    className={classes.content}
+                                    scrollToTopOnChildChange
+                                >
                                     {config.toolbar.display && config.toolbar.position === 'below' && config.toolbar.style !== 'fixed' && (
                                         <ToolbarLayout1/>
                                     )}
@@ -159,7 +166,7 @@ function Layout1(props)
                                     <FuseDialog/>
 
                                     <FuseSuspense>
-                                        {renderRoutes(routes, { filterSelected })}
+                                        {renderRoutes(routes, { filterSelected, newCardForm, setNewCardForm })}
                                     </FuseSuspense>
 
                                     {props.children}

@@ -117,6 +117,8 @@ function Board(props)
                                         key={list.id}
                                         list={list}
                                         index={index}
+                                        newCardForm={index === 0 ? props.newCardForm : false}
+                                        setNewCardForm={props.setNewCardForm}
                                     />
                                 ))}
                                 {provided.placeholder}

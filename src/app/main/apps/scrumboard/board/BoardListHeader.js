@@ -107,7 +107,7 @@ function BoardListHeader(props)
 
                 </div>
                 <div className="">
-                    <IconButton
+                    {/* <IconButton
                         aria-owns={anchorEl ? 'actions-menu' : null}
                         aria-haspopup="true"
                         onClick={handleMenuClick}
@@ -115,7 +115,7 @@ function BoardListHeader(props)
                         size="small"
                     >
                         <Icon className="text-20">add</Icon>
-                    </IconButton>
+                    </IconButton> */}
                     <Menu
                         id="actions-menu"
                         anchorEl={anchorEl}

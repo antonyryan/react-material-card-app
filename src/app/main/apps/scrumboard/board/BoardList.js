@@ -21,16 +21,10 @@ function BoardList(props)
 {
     const classes = useStyles(props);
     const contentScrollEl = useRef(null);
-    const [cardAddForm, setCardAddForm] = useState(false);
 
     function handleCardAdded()
     {
         contentScrollEl.current.scrollTop = contentScrollEl.current.scrollHeight;
-    }
-
-    function handleSetCardAddForm(show)
-    {
-        setCardAddForm(show)
     }
 
     return (
@@ -49,7 +43,7 @@ function BoardList(props)
                         <BoardListHeader
                             list={props.list}
                             className="border-b-1"
-                            showCardAddForm={() => handleSetCardAddForm(true)}
+                            // showCardAddForm={() => handleSetCardAddForm(true)}
                             // handleProps={provided.dragHandleProps}
                         />
 
@@ -77,14 +71,15 @@ function BoardList(props)
                             </CardContent>
                         </RootRef>
 
-                        <CardActions className="p-0 flex-shrink-0">
-                            <BoardAddCard
-                                listId={props.list.id}
-                                onCardAdded={handleCardAdded}
-                                cardAddForm={cardAddForm}
-                                hideCardAddForm={() => handleSetCardAddForm(false)}
-                            />
-                        </CardActions>
+                        {props.newCardForm && (
+                            <CardActions className="p-0 flex-shrink-0">
+                                <BoardAddCard
+                                    listId={props.list.id}
+                                    onCardAdded={handleCardAdded}
+                                    hideCardAddForm={() => props.setNewCardForm(false)}
+                                />
+                            </CardActions>
+                        )}
                     </Card>
         //         </div>
         //     )}
