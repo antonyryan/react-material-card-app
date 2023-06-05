@@ -68,6 +68,9 @@ function BoardCard(props)
                         elevation={snapshot.isDragging ? 3 : 0}
                         onClick={(ev) => handleCardClick(ev, card)}
                     >
+                        <Typography className="font-600 p-16 capitalize">
+                            {card.name}
+                        </Typography>
 
                         {board.settings.cardCoverImages && !!card.idAttachmentCover && (
                             <img
@@ -92,7 +95,6 @@ function BoardCard(props)
                                 </div>
                             )}
 
-                            <Typography className="font-600 mb-12">{card.name}</Typography>
 
                             {(card.due || checkItems > 0) && (
                                 <div className="flex items-center mb-12">
