@@ -143,15 +143,20 @@ function BoardCardForm(props)
         const date = new Date();
         const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
         const updatedAttachments = cardForm.attachments.concat({ ...attachment, time })
+        let idAttachmentCover = null;
 
         if (!cardForm.idAttachmentCover) {
-            const coverImage = _.find(updatedAttachments, { type: 'image'});
+            const coverImage = _.find(updatedAttachments, ({ type }) => type.indexOf('image') >= 0);
             if (coverImage) {
-                cardForm.idAttachmentCover = coverImage.id;
+                idAttachmentCover = coverImage.id;
             }
         }
         
-        setInForm('attachments', updatedAttachments);
+        setForm({
+            ...cardForm,
+            idAttachmentCover: idAttachmentCover,
+            attachments: updatedAttachments
+        })
     }
 
     return (
