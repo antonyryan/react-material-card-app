@@ -40,7 +40,7 @@ export function updateCard(card)
             id_card: card.id,
             title: card.name,
             description: card.description,
-            due_date: card.due,
+            due_date: card.due ? card.due.toISOString().slice(0, 10) : "",
             detail
         });
 

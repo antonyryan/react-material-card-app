@@ -6,7 +6,10 @@ function useForm(initialState, onSubmit)
     const [form, setForm] = useState(initialState);
 
     const change = event => {
-        event.persist();
+        if (event.persist) {
+            event.persist();
+        }
+        
         setForm(
             form => ({
                 ...form,

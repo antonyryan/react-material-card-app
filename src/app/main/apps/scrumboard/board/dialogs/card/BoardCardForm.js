@@ -13,6 +13,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
+import {KeyboardDatePicker} from "@material-ui/pickers";
 import { makeStyles } from '@material-ui/styles';
 
 import {FuseChipSelect} from '@fuse';
@@ -40,6 +41,11 @@ const useStyles = makeStyles(theme => ({
     saveButton: {
         margin: '1em',
         marginLeft: 0
+    },
+    datePicker: {
+        '& .MuiFormHelperText-root': {
+            display: 'none'
+        }
     }
 }));
 
@@ -54,11 +60,14 @@ function BoardCardForm(props)
         dispatch(Actions.updateCard({...newCard}));
     }, 0);
 
-    const dueDate = cardForm && cardForm.due ? moment(cardForm.due).format(moment.HTML5_FMT.DATE) : "";
+    const dueDate = cardForm && cardForm.due ? moment(cardForm.due).toDate() : null;
     const classes = useStyles();
 
     function handleSaveClick()
     {
+        if (dueDate && isNaN(dueDate.valueOf())) {
+            return;
+        }
         updateCard(cardForm);
     }
 
@@ -235,25 +244,19 @@ function BoardCardForm(props)
                     </div>
 
                     {cardForm.due && (
-                        <TextField
+                        <KeyboardDatePicker
+                            ampm={false}
                             label="Due date"
-                            type="date"
-                            name="due"
+                            inputVariant="outlined"
+                            onChange={v => {
+                                const e = { target: { name: 'due', type: 'date', value: v } };
+                                handleChange(e);
+                            }}
+                            invalidDateMessage={<></>}
+                            className={classes.datePicker}
                             value={dueDate}
-                            onChange={handleChange}
-                            placeholder=" Choose a due date"
-                            className="w-full sm:w-auto"
-                            InputLabelProps={{
-                                shrink: true
-                            }}
-                            variant="outlined"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <Icon color="action">today</Icon>
-                                    </InputAdornment>
-                                )
-                            }}
+                            showTodayButton
+                            format="dd/MM/yyyy"
                         />
                     )}
                 </div>
